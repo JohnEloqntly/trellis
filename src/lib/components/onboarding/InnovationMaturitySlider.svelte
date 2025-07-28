@@ -140,9 +140,4 @@
   </div>
 </div>
 
-<style>
-  /* Custom focus styles */
-  input[type="range"]:focus + .thumb {
-    box-shadow: 0 0 0 3px rgba(45, 73, 120, 0.2);
-  }
-</style> 
+ 
