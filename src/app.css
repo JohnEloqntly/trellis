@@ -1,0 +1,139 @@
+/* GT Walsheim Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GT Walsheim Font Faces - Using Inter as a high-quality fallback until GT Walsheim files are available */
+@font-face {
+  font-family: 'GT Walsheim';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: local('Inter'), local('Inter-Regular');
+}
+
+@font-face {
+  font-family: 'GT Walsheim Bold';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: local('Inter'), local('Inter-Bold');
+}
+
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+/* Fix overscroll bounce and background issues */
+html, body {
+  background-color: #ffffff;
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
+  -webkit-overscroll-behavior: none;
+  -webkit-overscroll-behavior-y: none;
+}
+
+/* Ensure consistent white background */
+html {
+  background: #ffffff;
+}
+
+body {
+  background: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+/* Additional overscroll protection for all elements */
+* {
+  overscroll-behavior: contain;
+}
+
+/* Ensure viewport background is white */
+:root {
+  background: #ffffff;
+}
+
+/* Improve image rendering performance */
+img {
+  content-visibility: auto;
+  contain-intrinsic-size: 128px 128px;
+}
+
+/* Optimize animations for performance */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse {
+    animation: none;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize scrollbar performance */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Improve focus visibility */
+.focus-ring:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+body {
+  background: linear-gradient(135deg, #2D4978 0%, #1b2c48 100%);
+  min-height: 100vh;
+  font-family: 'GT Walsheim', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Custom properties for consistent theming */
+:root {
+  --primary-blue: #2563eb;
+  --primary-tint: #dbeafe;
+  --cta-pink: #ec4899;
+  --text-white: #ffffff;
+  --text-white-80: rgba(255, 255, 255, 0.8);
+  --text-white-60: rgba(255, 255, 255, 0.6);
+  --bg-white-10: rgba(255, 255, 255, 0.1);
+  --bg-white-15: rgba(255, 255, 255, 0.15);
+  --bg-white-20: rgba(255, 255, 255, 0.2);
+  --border-white-20: rgba(255, 255, 255, 0.2);
+  --border-white-30: rgba(255, 255, 255, 0.3);
+}
+
+/* Logo hover animations */
+.logo-hover {
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+.logo-hover:hover {
+  transform: scale(1.05);
+} 

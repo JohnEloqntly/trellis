@@ -1,0 +1,7 @@
+Place GT Walsheim font files here:
+- GTWalsheim-Regular.woff2
+- GTWalsheim-Regular.woff
+- GTWalsheim-Bold.woff2
+- GTWalsheim-Bold.woff
+
+For now, the application will fall back to system fonts until these are added. 

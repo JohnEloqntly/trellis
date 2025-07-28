@@ -1,0 +1,14 @@
+Add funding body logos here:
+- ukri.png
+- wellcome.png
+- bbsrc.png
+- epsrc.png
+- mrc.png
+- nerc.png
+- esrc.png
+- stfc.png
+- ahrc.png
+- innovate-uk.png
+
+These should be high-quality PNG files with transparent backgrounds.
+Recommended size: 200px height, variable width to maintain aspect ratio. 
