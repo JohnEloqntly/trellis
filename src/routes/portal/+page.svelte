@@ -506,7 +506,7 @@
               {/if}
             </h2>
             <p class="text-gray-600">
-              {#if activeSection === 'matches'}Your personalized grant recommendations
+              {#if activeSection === 'matches'}Your personalised grant recommendations
               {:else if activeSection === 'competitions'}Browse all available funding opportunities
               {:else if activeSection === 'saved-writers'}Your favorite grant writers
               {:else if activeSection === 'saved-competitions'}Competitions you've saved for later
