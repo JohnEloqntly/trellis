@@ -4,6 +4,7 @@
   
   export let type = 'text';
   export let label = '';
+  /** @type {string | string[]} */
   export let value = '';
   export let placeholder = '';
   export let required = true;
@@ -12,12 +13,16 @@
   export let error = '';
   export let maxlength = null;
   export let minlength = null;
+  /** @type {string[]} */
   export let options = [];
+  /** @type {boolean} */
+  export let multiple = false;
   export let min = null;
   export let max = null;
   export let step = null;
   
   const dispatch = createEventDispatcher();
+  /** @type {HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null} */
   let inputElement;
   let characterCount = 0;
   
@@ -27,13 +32,29 @@
     }
   });
   
+  /**
+   * @param {Event} event
+   */
   function handleInput(event) {
-    const newValue = event.target.value;
+    const target = /** @type {HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null} */ (event.target);
+    if (!target) return;
+    const newValue = /** @type {any} */ (target.value);
+    // For multiselect, collect selected values as an array
+    if (multiple && target instanceof HTMLSelectElement) {
+      const selected = Array.from(target.selectedOptions).map(o => o.value);
+      value = selected;
+      characterCount = Array.isArray(value) ? value.join(',').length : 0;
+      dispatch('input', { value: selected });
+      return;
+    }
     value = newValue;
     characterCount = newValue.length;
     dispatch('input', { value: newValue });
   }
   
+  /**
+   * @param {KeyboardEvent} event
+   */
   function handleKeydown(event) {
     if (event.key === 'Enter' && type !== 'textarea') {
       event.preventDefault();
@@ -41,8 +62,15 @@
     }
   }
   
-  $: isValid = validateField(value, type, required, minlength, maxlength);
+  $: isValid = validateField(Array.isArray(value) ? value.join(',') : value, type, required, minlength, maxlength);
   
+  /**
+   * @param {string} val
+   * @param {string} fieldType
+   * @param {boolean} isRequired
+   * @param {number|null} minLen
+   * @param {number|null} maxLen
+   */
   function validateField(val, fieldType, isRequired, minLen, maxLen) {
     if (isRequired && !val.trim()) return false;
     
@@ -73,24 +101,44 @@
   </label>
   
   {#if type === 'select'}
-    <select
-      id={`field-${label}`}
-      bind:this={inputElement}
-      bind:value
-      on:change={handleInput}
-      on:keydown={handleKeydown}
-      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-colors duration-200 text-gray-900 bg-white"
-      class:border-red-300={error}
-      class:focus:ring-red-500={error}
-      {autocomplete}
-      aria-invalid={error ? 'true' : 'false'}
-      aria-describedby={error ? `${label}-error` : null}
-    >
-      <option value="">{placeholder}</option>
-      {#each options as option}
-        <option value={option}>{option}</option>
-      {/each}
-    </select>
+    {#if multiple}
+      <select
+        id={`field-${label}`}
+        bind:this={inputElement}
+        multiple
+        bind:value
+        on:change={handleInput}
+        on:keydown={handleKeydown}
+        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-colors duration-200 text-gray-900 bg-white"
+        class:border-red-300={error}
+        class:focus:ring-red-500={error}
+        aria-invalid={error ? 'true' : 'false'}
+        aria-describedby={error ? `${label}-error` : null}
+      >
+        {#each options as option}
+          <option value={option}>{option}</option>
+        {/each}
+      </select>
+    {:else}
+      <select
+        id={`field-${label}`}
+        bind:this={inputElement}
+        bind:value
+        on:change={handleInput}
+        on:keydown={handleKeydown}
+        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-colors duration-200 text-gray-900 bg-white"
+        class:border-red-300={error}
+        class:focus:ring-red-500={error}
+        {autocomplete}
+        aria-invalid={error ? 'true' : 'false'}
+        aria-describedby={error ? `${label}-error` : null}
+      >
+        <option value="">{placeholder}</option>
+        {#each options as option}
+          <option value={option}>{option}</option>
+        {/each}
+      </select>
+    {/if}
   {:else if type === 'textarea'}
     <textarea
       id={`field-${label}`}

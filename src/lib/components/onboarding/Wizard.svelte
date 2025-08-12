@@ -68,7 +68,9 @@
       type: 'select',
       placeholder: 'Select your company size',
       options: [
-        '1-9',
+        '1',
+        '2-5',
+        '6-9',
         '10-49',
         '50-249',
         '250+'
@@ -175,8 +177,9 @@
       title: "What other sectors outside your own benefit?",
       subtitle: "List any adjacent sectors that your project positively impacts",
       field: 'crossSectors',
-      type: 'text',
-      placeholder: 'e.g., Healthcare, Agriculture',
+      type: 'select',
+      placeholder: 'Select sectors',
+      options: sectorOptions,
       autofocus: true,
     },
     {
@@ -330,17 +333,12 @@
         // Clear the stored data
         onboardingData.reset();
         
-        // Navigate to loading screen with data
-        goto('/loading', { 
-          state: { 
-            searchData: {
-              sector: data.sector,
-              technologyType: data.technologyType,
-              innovationMaturity: data.innovationMaturity,
-              companyName: data.companyName
-            }
-          }
-        });
+        // Navigate to loading with URL params so both dev and prod work reliably
+        const url = `/loading?sector=${encodeURIComponent(data.sector || '')}` +
+          `&technology=${encodeURIComponent(data.technologyType || '')}` +
+          `&maturity=${encodeURIComponent(String(data.innovationMaturity ?? '5'))}` +
+          `&company=${encodeURIComponent(data.companyName || '')}`;
+        goto(url);
       } else {
         throw new Error('Failed to submit onboarding data');
       }
@@ -415,10 +413,18 @@
                out:slide={{ duration: 300, axis: 'x' }}
              >
         <!-- Step Header with Encouragement -->
-        <div class="mb-8">
+         <div class="mb-8">
           <h1 id="wizard-title" class="text-2xl sm:text-3xl font-gt-walsheim-bold text-gray-900 mb-3 leading-tight">
             {currentStepData.title}
           </h1>
+           <!-- Section badge: Company vs Project -->
+           <div class="mb-2">
+             {#if currentStepValue <= 4}
+               <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-primary-blue border border-blue-100">Company</span>
+             {:else}
+               <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100">Project</span>
+             {/if}
+           </div>
           <p class="text-gray-600 text-base mb-4 leading-relaxed">
             {currentStepData.subtitle}
           </p>
@@ -544,6 +550,8 @@
               label={currentStepData.title}
               bind:value={data.crossSectors}
               placeholder={currentStepData.placeholder}
+              multiple={true}
+              options={currentStepData.options || []}
               autofocus={currentStepData.autofocus}
               on:input={handleFieldInput}
               on:enter={handleEnter}

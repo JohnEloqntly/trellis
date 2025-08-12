@@ -1,13 +1,17 @@
 import { json } from '@sveltejs/kit';
 
+/**
+ * @param {{ request: Request }} param0
+ */
 export async function POST({ request }) {
   try {
     const data = await request.json();
     
     // Simple validation - just check that basic fields exist
-    if (!data.name || !data.companyName) {
+    // Focus on project-based funding: require companyName; name is optional
+    if (!data.companyName) {
       return json(
-        { error: 'Please provide at least a name and company' },
+        { error: 'Please provide your company name' },
         { status: 400 }
       );
     }
@@ -22,6 +26,7 @@ export async function POST({ request }) {
       name: data.name,
       email: data.email,
       company: data.companyName,
+      projectName: data.projectName,
       sector: data.sector,
       technology: data.technologyType,
       maturity: data.innovationMaturity
