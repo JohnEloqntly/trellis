@@ -102,57 +102,7 @@
     </div>
   </section>
   
-  <!-- About Section -->
-  <section class="py-16 md:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl mx-auto text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-gt-walsheim-bold mb-6 text-gray-900">
-          Why We <span class="bg-gradient-to-r from-primary-blue to-secondary-blue bg-clip-text text-transparent">Exist</span>
-        </h2>
-        <p class="text-lg text-gray-700 mb-8">
-          We cut through the noise of the funding landscape so founders can keep building. Like a tardigrade, we are small, nimble and resilient, able to survive funding droughts and thrive when opportunity bursts.
-        </p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-          <div class="bg-gradient-to-br from-blue-50 to-indigo-50/50 p-6 rounded-2xl shadow-sm">
-            <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold mb-2 text-gray-900">Our Values</h3>
-            <p class="text-gray-700">
-              Only experts can simplify complexity. We are clear, treat clients as partners, and always tell the truth. We are curious, hungry, own outcomes, and stay calm under pressure.
-            </p>
-          </div>
-          
-          <div class="bg-gradient-to-br from-blue-50 to-indigo-50/50 p-6 rounded-2xl shadow-sm">
-            <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold mb-2 text-gray-900">How We Win</h3>
-            <p class="text-gray-700">
-              Our sales team is freed from admin, spending 80% of their time talking with clients and building relationships others overlook. Our platform democratizes grant funding, freeing our team to pursue bigger wins.
-            </p>
-          </div>
-          
-          <div class="bg-gradient-to-br from-blue-50 to-indigo-50/50 p-6 rounded-2xl shadow-sm">
-            <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold mb-2 text-gray-900">What We Sell</h3>
-            <p class="text-gray-700">
-              We meet innovators where they are, from uncovering the right grants to taking the full weight of applications off their shoulders. Our focus includes Innovate UK grants, EIC Accelerator, and thematic competitions.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+
   
   <!-- Team Members Section -->
   <section class="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-blue-50/30">
@@ -214,42 +164,7 @@
     </div>
   </section>
   
-  <!-- CTA Section -->
-  <section class="py-16 md:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-gradient-to-br from-primary-blue/10 to-secondary-blue/10 rounded-3xl p-8 md:p-12 relative overflow-hidden">
-        <!-- Background Pattern -->
-        <div class="absolute inset-0 z-0">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="cta-dots" width="30" height="30" patternUnits="userSpaceOnUse">
-                <circle cx="15" cy="15" r="1.5" fill="#4361ee" opacity="0.15" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#cta-dots)" />
-          </svg>
-        </div>
-        
-        <div class="relative z-10 text-center max-w-3xl mx-auto">
-          <h2 class="text-3xl md:text-4xl font-gt-walsheim-bold mb-6 text-gray-900">
-            Ready to <span class="bg-gradient-to-r from-primary-blue to-secondary-blue bg-clip-text text-transparent">Work With Us</span>?
-          </h2>
-          <p class="text-lg text-gray-700 mb-8">
-            Let our team of experts help you navigate the funding landscape and secure the grants your innovative project deserves.
-          </p>
-          <a 
-            href="/" 
-            class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-gt-walsheim-bold rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-105"
-          >
-            Get Started
-            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+
 </main>
 
 <Footer />
