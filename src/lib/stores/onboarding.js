@@ -3,14 +3,26 @@ import { browser } from '$app/environment';
 
 // Initial onboarding data structure
 const initialData = {
+  // Personal contact details
   name: '',
   email: '',
   phone: '',
+
+  // Company information
   companyName: '',
+  employeeCount: '',
   website: '',
-  technologyType: '',
-  innovationMaturity: 5,
   sector: '',
+
+  // Project information
+  projectName: '',
+  problemStatement: '',
+  solutionApproach: '',
+  technologyType: '',
+  crossSectors: '',
+  innovationMaturity: 5,
+  
+  // Narrative
   elevatorPitch: ''
 };
 
@@ -34,6 +46,10 @@ function createOnboardingStore() {
 
   return {
     subscribe,
+    /**
+     * @param {string} field
+     * @param {any} value
+     */
     updateField: (field, value) => {
       update(data => {
         const newData = { ...data, [field]: value };

@@ -21,10 +21,15 @@
     email: '',
     phone: '',
     companyName: '',
+    employeeCount: '',
     website: '',
-    technologyType: '',
-    innovationMaturity: 5,
     sector: '',
+    projectName: '',
+    problemStatement: '',
+    solutionApproach: '',
+    technologyType: '',
+    crossSectors: '',
+    innovationMaturity: 5,
     elevatorPitch: ''
   };
   let errors: { submit?: string } = {};
@@ -39,14 +44,15 @@
   });
   
   const steps = [
+    // Company section
     {
       id: 1,
-      title: "Let's start with your name",
-      subtitle: "We'll use this to personalise your experience and communications",
-      field: 'name',
+      title: "Company name",
+      subtitle: "Tell us who you are so we can match funding appropriately",
+      field: 'companyName',
       type: 'text',
-      placeholder: 'Enter your full name',
-      autocomplete: 'name',
+      placeholder: 'Your organisation name',
+      autocomplete: 'organization',
       autofocus: true,
 
       whyWeAsk: "We personalise your results and any future communications using your name.",
@@ -56,12 +62,17 @@
     },
     {
       id: 2,
-      title: "What's your email address?",
-      subtitle: "We'll send your personalised grant matches here",
-      field: 'email',
-      type: 'email',
-      placeholder: 'your.email@company.com',
-      autocomplete: 'email',
+      title: "Employee count",
+      subtitle: "Some programmes target specific organisation sizes",
+      field: 'employeeCount',
+      type: 'select',
+      placeholder: 'Select your company size',
+      options: [
+        '1-9',
+        '10-49',
+        '50-249',
+        '250+'
+      ],
       autofocus: true,
 
       whyWeAsk: "Your grant matches and application deadlines will be sent here. We never spam - only valuable opportunities.",
@@ -71,12 +82,12 @@
     },
     {
       id: 3,
-      title: "Your contact number",
-      subtitle: "For urgent grant opportunities and application deadlines",
-      field: 'phone',
-      type: 'tel',
-      placeholder: '+44 7XXX XXX XXX',
-      autocomplete: 'tel',
+      title: "Company website",
+      subtitle: "We'll review your work to find the most relevant opportunities",
+      field: 'website',
+      type: 'url',
+      placeholder: 'www.yourcompany.com',
+      autocomplete: 'url',
       autofocus: true,
 
       whyWeAsk: "Sometimes grant deadlines are tight. We'll text you about time-sensitive opportunities you can't afford to miss.",
@@ -86,26 +97,27 @@
     },
     {
       id: 4,
-      title: "Company or organisation name",
-      subtitle: "Help us understand your innovation context",
-      field: 'companyName',
-      type: 'text',
-      placeholder: 'Your organisation name',
-      autocomplete: 'organization',
+      title: "Which sector do you operate in?",
+      subtitle: "This helps us find sector-specific funding opportunities",
+      field: 'sector',
+      type: 'select',
+      placeholder: 'Select your sector',
+      options: sectorOptions,
       autofocus: true,
       whyWeAsk: "Different grants favour different organisation types (startups, SMEs, universities). This helps us match you correctly.",
       icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
              </svg>`
     },
+    // Project section
     {
       id: 5,
-      title: "Company website",
-      subtitle: "We'll review your work to find the most relevant opportunities",
-      field: 'website',
-      type: 'url',
-      placeholder: 'www.yourcompany.com',
-      autocomplete: 'url',
+      title: "What is the name of your project?",
+      subtitle: "We’ll match funding to the specific project you’re working on",
+      field: 'projectName',
+      type: 'text',
+      placeholder: 'Project name',
+      autocomplete: 'off',
       autofocus: true,
 
       whyWeAsk: "We analyse your website to better understand your technology and market focus, leading to more accurate grant matches.",
@@ -115,12 +127,12 @@
     },
     {
       id: 6,
-      title: "Technology focus area",
-      subtitle: "What's the core technology behind your innovation?",
-      field: 'technologyType',
-      type: 'select',
-      placeholder: 'Select your technology area',
-      options: technologyOptions,
+      title: "What problem are you solving?",
+      subtitle: "Briefly describe the core problem your project addresses",
+      field: 'problemStatement',
+      type: 'textarea',
+      placeholder: 'Describe the problem…',
+      maxlength: 400,
       autofocus: true,
 
       whyWeAsk: "Many grants are specifically for certain technologies (machine learning, biotech, clean energy). This is crucial for finding your perfect matches.",
@@ -130,13 +142,12 @@
     },
     {
       id: 7,
-      title: "Innovation maturity level",
-      subtitle: "How developed is your technology? (Based on NASA TRL scale)",
-      field: 'innovationMaturity',
-      type: 'range',
-      min: 1,
-      max: 9,
-      step: 1,
+      title: "What’s the solution?",
+      subtitle: "Explain how your project solves the problem",
+      field: 'solutionApproach',
+      type: 'textarea',
+      placeholder: 'Describe the solution…',
+      maxlength: 400,
       autofocus: true,
 
       whyWeAsk: "Early-stage grants fund research and proof-of-concept. Later-stage grants fund commercialisation and scaling. This ensures perfect matching.",
@@ -146,12 +157,12 @@
     },
     {
       id: 8,
-      title: "Which sector do you operate in?",
-      subtitle: "This helps us find sector-specific funding opportunities",
-      field: 'sector',
+      title: "What technology are you leveraging?",
+      subtitle: "What's the core technology behind your innovation?",
+      field: 'technologyType',
       type: 'select',
-      placeholder: 'Select your sector',
-      options: sectorOptions,
+      placeholder: 'Select your technology area',
+      options: technologyOptions,
       autofocus: true,
 
       whyWeAsk: "Many grants target specific sectors (healthcare, agriculture, defence). Sector matching is key to finding grants where you'll be competitive.",
@@ -161,19 +172,41 @@
     },
     {
       id: 9,
-      title: "Your innovation story",
-      subtitle: "Briefly describe your innovation and its impact (max 400 characters)",
-      field: 'elevatorPitch',
-      type: 'textarea',
-      placeholder: 'Describe your innovation and the problem it solves...',
-      maxlength: 400,
+      title: "What other sectors outside your own benefit?",
+      subtitle: "List any adjacent sectors that your project positively impacts",
+      field: 'crossSectors',
+      type: 'text',
+      placeholder: 'e.g., Healthcare, Agriculture',
       autofocus: true,
+    },
+    {
+      id: 10,
+      title: "TRL Explainer",
+      subtitle: "Technology Readiness Level helps align you to the right funding stage",
+      field: 'trlExplainer',
+      type: 'info',
+      placeholder: '',
+      autofocus: false,
 
-      whyWeAsk: "Your innovation story helps us match you with grants that align with your specific impact and market approach.",
+      whyWeAsk: "TRL provides a common language for readiness. Many grants specify TRL bands.",
       icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
              </svg>`
-    }
+    },
+    {
+      id: 11,
+      title: "What is your TRL level?",
+      subtitle: "How developed is your technology? (Based on NASA TRL scale)",
+      field: 'innovationMaturity',
+      type: 'range',
+      min: 1,
+      max: 9,
+      step: 1,
+      autofocus: true,
+      icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+             </svg>`
+    },
   ];
   
   $: currentStepData = steps.find(step => step.id === currentStepValue);
@@ -184,6 +217,8 @@
   function validateCurrentStep() {
     // Always allow proceeding - just check that any value exists
     if (!currentStepData) return true;
+    // Info-only steps don't require input
+    if ((currentStepData as any).type === 'info') return true;
     
     const fieldName = currentStepData.field;
     let fieldValue = (data as any)[fieldName];
@@ -229,10 +264,15 @@
       else if (fieldName === 'email') data.email = processedValue;
       else if (fieldName === 'phone') data.phone = processedValue;
       else if (fieldName === 'companyName') data.companyName = processedValue;
+      else if (fieldName === 'employeeCount') data.employeeCount = processedValue;
       else if (fieldName === 'website') data.website = processedValue;
-      else if (fieldName === 'technologyType') data.technologyType = processedValue;
-      else if (fieldName === 'innovationMaturity') data.innovationMaturity = processedValue;
       else if (fieldName === 'sector') data.sector = processedValue;
+      else if (fieldName === 'projectName') data.projectName = processedValue;
+      else if (fieldName === 'problemStatement') data.problemStatement = processedValue;
+      else if (fieldName === 'solutionApproach') data.solutionApproach = processedValue;
+      else if (fieldName === 'technologyType') data.technologyType = processedValue;
+      else if (fieldName === 'crossSectors') data.crossSectors = processedValue;
+      else if (fieldName === 'innovationMaturity') data.innovationMaturity = processedValue;
       else if (fieldName === 'elevatorPitch') data.elevatorPitch = processedValue;
       
       // Also update the store
@@ -432,6 +472,17 @@
               on:input={handleFieldInput}
               on:enter={handleEnter}
             />
+          {:else if currentStepData.field === 'employeeCount'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.employeeCount}
+              placeholder={currentStepData.placeholder}
+              options={currentStepData.options || []}
+              autofocus={currentStepData.autofocus}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
           {:else if currentStepData.field === 'website'}
             <StepField
               type={currentStepData.type}
@@ -439,6 +490,38 @@
               bind:value={data.website}
               placeholder={currentStepData.placeholder}
               autocomplete={currentStepData.autocomplete}
+              autofocus={currentStepData.autofocus}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
+          {:else if currentStepData.field === 'projectName'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.projectName}
+              placeholder={currentStepData.placeholder}
+              autofocus={currentStepData.autofocus}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
+          {:else if currentStepData.field === 'problemStatement'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.problemStatement}
+              placeholder={currentStepData.placeholder}
+              maxlength={currentStepData.maxlength ? undefined : undefined}
+              autofocus={currentStepData.autofocus}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
+          {:else if currentStepData.field === 'solutionApproach'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.solutionApproach}
+              placeholder={currentStepData.placeholder}
+              maxlength={currentStepData.maxlength ? undefined : undefined}
               autofocus={currentStepData.autofocus}
               on:input={handleFieldInput}
               on:enter={handleEnter}
@@ -455,6 +538,20 @@
               on:input={handleFieldInput}
               on:enter={handleEnter}
             />
+          {:else if currentStepData.field === 'crossSectors'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.crossSectors}
+              placeholder={currentStepData.placeholder}
+              autofocus={currentStepData.autofocus}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
+          {:else if currentStepData.field === 'trlExplainer'}
+            <div class="rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700">
+              Technology Readiness Level (TRL) ranges from 1 (basic research) to 9 (market ready). Many grants specify eligible TRL bands so we can route you to the right funding.
+            </div>
           {:else if currentStepData.field === 'innovationMaturity'}
             <InnovationMaturitySlider
               bind:value={data.innovationMaturity}
