@@ -277,6 +277,7 @@
   $: isLastStep = currentStepValue === steps.length;
   $: isFirstStep = currentStepValue === 1;
   $: canProceed = validateCurrentStep();
+  $: currentTrlDescription = getTrlDescription(data.innovationMaturity);
   
   function validateCurrentStep() {
     // Always allow proceeding - just check that any value exists
@@ -355,24 +356,27 @@
     }
   }
   
+  function getTrlDescription(value: number): string {
+    // Type-safe way to get TRL descriptions
+    if (value === 1) return trlDescriptions[1];
+    if (value === 2) return trlDescriptions[2];
+    if (value === 3) return trlDescriptions[3];
+    if (value === 4) return trlDescriptions[4];
+    if (value === 5) return trlDescriptions[5];
+    if (value === 6) return trlDescriptions[6];
+    if (value === 7) return trlDescriptions[7];
+    if (value === 8) return trlDescriptions[8];
+    if (value === 9) return trlDescriptions[9];
+    return '';
+  }
+  
   function handleSliderChange(event: any) {
     const value = parseInt(event.detail.value);
     onboardingData.updateField('innovationMaturity', value);
     
     // Show TRL tooltip
     if (value >= 1 && value <= 9) {
-      const descriptions: Record<number, string> = {
-        1: "Basic principles observed - Scientific research begins",
-        2: "Technology concept formulated - Practical application is identified",
-        3: "Experimental proof of concept - Active R&D is initiated",
-        4: "Technology validated in lab - Basic components are integrated",
-        5: "Technology validated in relevant environment - Large scale components integrated",
-        6: "Technology demonstrated in relevant environment - Representative model tested",
-        7: "System prototype demonstration - Demonstration in operational environment",
-        8: "System complete and qualified - Technology proven to work",
-        9: "Actual system proven in operational environment - Ready for deployment"
-      };
-      tooltipContent = descriptions[value];
+      tooltipContent = getTrlDescription(value);
       showTrlTooltip = true;
       setTimeout(() => showTrlTooltip = false, 3000);
     }
@@ -737,16 +741,93 @@
               on:enter={handleEnter}
             />
           {:else if currentStepData.field === 'trlExplainer'}
-            <div class="rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700">
-              Technology Readiness Level (TRL) ranges from 1 (basic research) to 9 (market ready). Many grants specify eligible TRL bands so we can route you to the right funding.
+            <div class="relative overflow-hidden rounded-2xl">
+              <!-- Stylish background with gradient and patterns -->
+              <div class="absolute inset-0 bg-gradient-to-br from-purple-50 to-violet-50/50 opacity-90 z-0"></div>
+              <div class="absolute inset-0 z-0">
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <pattern id="trl-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <circle cx="10" cy="10" r="1.5" fill="#7C3AED" opacity="0.15" />
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#trl-dots)" />
+                </svg>
+              </div>
+              
+              <!-- Content -->
+              <div class="relative z-10 p-6">
+                <!-- Icon in floating card -->
+                <div class="absolute top-6 right-6 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center transform rotate-3">
+                  <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-violet-600 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
+                </div>
+                
+                <h3 class="text-2xl font-gt-walsheim-bold mb-4 pr-20">
+                  <span class="bg-gradient-to-r from-purple-600 to-violet-500 bg-clip-text text-transparent">Technology Readiness Level</span> explained
+                </h3>
+                
+                <p class="text-gray-700 mb-4">TRL is a standardized scale (1-9) used by funding bodies to determine which stage of development they will fund. Understanding your TRL helps us match you to appropriate grants.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                  <div class="bg-white/80 rounded-lg p-3 border border-purple-100 shadow-sm">
+                    <div class="font-semibold text-purple-800 mb-1">Early Stage (TRL 1-3)</div>
+                    <p class="text-sm text-gray-600">Basic research, concept formulation, and experimental proof of concept. Typically funded by research grants.</p>
+                  </div>
+                  
+                  <div class="bg-white/80 rounded-lg p-3 border border-purple-100 shadow-sm">
+                    <div class="font-semibold text-purple-800 mb-1">Mid Stage (TRL 4-6)</div>
+                    <p class="text-sm text-gray-600">Technology validation in lab and relevant environments. Often funded by development and demonstration grants.</p>
+                  </div>
+                  
+                  <div class="bg-white/80 rounded-lg p-3 border border-purple-100 shadow-sm">
+                    <div class="font-semibold text-purple-800 mb-1">Late Stage (TRL 7-9)</div>
+                    <p class="text-sm text-gray-600">System prototype demonstration, qualification, and operational deployment. Typically funded by commercialization grants.</p>
+                  </div>
+                </div>
+                
+                <div class="text-sm text-gray-600 italic">
+                  On the next screen, you'll select your specific TRL level to help us find the most appropriate funding opportunities.
+                </div>
+              </div>
             </div>
           {:else if currentStepData.field === 'innovationMaturity'}
+            <div class="space-y-6">
+              <!-- TRL slider with enhanced visual feedback -->
             <InnovationMaturitySlider
               bind:value={data.innovationMaturity}
               min={1}
               max={9}
               on:change={handleSliderChange}
             />
+              
+              <!-- TRL level indicator with description -->
+              <div class="bg-white rounded-xl border border-purple-100 p-4 shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="font-semibold text-gray-900">Your selected level: <span class="text-purple-700">TRL {data.innovationMaturity}</span></h4>
+                  <div class="px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full">
+                    {data.innovationMaturity <= 3 ? 'Early Stage' : data.innovationMaturity <= 6 ? 'Mid Stage' : 'Late Stage'}
+                  </div>
+                </div>
+                <p class="text-gray-700 text-sm">{currentTrlDescription}</p>
+              </div>
+              
+              <!-- Checkbox for "show all grants" -->
+              <div class="flex items-center bg-purple-50/50 rounded-lg p-3 border border-purple-100">
+                <input 
+                  type="checkbox" 
+                  id="show-all-grants" 
+                  class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                  checked={false}
+                />
+                <label for="show-all-grants" class="ml-2 text-sm font-medium text-gray-700">
+                  Show me grants for all TRL levels (I'm interested in funding at any stage)
+                </label>
+              </div>
+            </div>
           {:else if currentStepData.field === 'sector'}
             <StepField
               type={currentStepData.type}
