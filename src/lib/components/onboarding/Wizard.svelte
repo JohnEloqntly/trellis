@@ -22,8 +22,10 @@
     phone: '',
     companyName: '',
     employeeCount: '',
+    companyAge: '',
     website: '',
     sector: '',
+    previousGrantFunding: '',
     projectName: '',
     problemStatement: '',
     solutionApproach: '',
@@ -87,13 +89,34 @@
       ],
       autofocus: true,
 
-      whyWeAsk: "Your grant matches and application deadlines will be sent here. We never spam - only valuable opportunities.",
+      whyWeAsk: "Many grant programs have eligibility criteria based on company size.",
       icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 7.89a1 1 0 001.42 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
              </svg>`
     },
     {
       id: 4,
+      title: "How long has your company been operating?",
+      subtitle: "Company age can affect eligibility for certain funding opportunities",
+      field: 'companyAge',
+      type: 'select',
+      placeholder: 'Select company age',
+      options: [
+        'Less than 1 year',
+        '1-2 years',
+        '3-5 years',
+        '6-10 years',
+        'More than 10 years'
+      ],
+      autofocus: true,
+
+      whyWeAsk: "Some grants specifically target early-stage companies or more established organizations.",
+      icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+             </svg>`
+    },
+    {
+      id: 5,
       title: "Company website",
       subtitle: "We'll review your work to find the most relevant opportunities",
       field: 'website',
@@ -108,7 +131,7 @@
              </svg>`
     },
     {
-      id: 5,
+      id: 6,
       title: "Which sector do you operate in?",
       subtitle: "This helps us find sector-specific funding opportunities",
       field: 'sector',
@@ -122,7 +145,7 @@
              </svg>`
     },
     {
-      id: 6,
+      id: 7,
       title: "Has your company applied for grant funding before?",
       subtitle: "Previous grant experience can affect eligibility for certain programmes",
       field: 'previousGrantFunding',
@@ -141,7 +164,7 @@
     },
     // Project section intro
     {
-      id: 7,
+      id: 8,
       title: "Now, tell us about your project",
       subtitle: "Grant funding is project-based. These details help match you with relevant opportunities",
       field: 'project_intro',
@@ -151,7 +174,7 @@
              </svg>`
     },
     {
-      id: 8,
+      id: 9,
       title: "What is the name of your project?",
       subtitle: "We’ll match funding to the specific project you’re working on",
       field: 'projectName',
@@ -166,7 +189,7 @@
              </svg>`
     },
     {
-      id: 9,
+      id: 10,
       title: "What problem are you solving?",
       subtitle: "Briefly describe the core problem your project addresses",
       field: 'problemStatement',
@@ -181,7 +204,7 @@
              </svg>`
     },
     {
-      id: 10,
+      id: 11,
       title: "What's the solution?",
       subtitle: "Explain how your project solves the problem",
       field: 'solutionApproach',
@@ -196,7 +219,7 @@
              </svg>`
     },
     {
-      id: 11,
+      id: 12,
       title: "What technology are you leveraging?",
       subtitle: "What's the core technology behind your innovation?",
       field: 'technologyType',
@@ -211,7 +234,7 @@
              </svg>`
     },
     {
-      id: 12,
+      id: 13,
       title: "What other sectors outside your own benefit?",
       subtitle: "List any adjacent sectors that your project positively impacts",
       field: 'crossSectors',
@@ -221,7 +244,7 @@
       autofocus: true,
     },
     {
-      id: 13,
+      id: 14,
       title: "TRL Explainer",
       subtitle: "Technology Readiness Level helps align you to the right funding stage",
       field: 'trlExplainer',
@@ -235,7 +258,7 @@
              </svg>`
     },
     {
-      id: 14,
+      id: 15,
       title: "What is your TRL level?",
       subtitle: "How developed is your technology? (Based on NASA TRL scale)",
       field: 'innovationMaturity',
@@ -306,6 +329,7 @@
       else if (fieldName === 'phone') data.phone = processedValue;
       else if (fieldName === 'companyName') data.companyName = processedValue;
       else if (fieldName === 'employeeCount') data.employeeCount = processedValue;
+      else if (fieldName === 'companyAge') data.companyAge = processedValue;
       else if (fieldName === 'website') data.website = processedValue;
       else if (fieldName === 'sector') data.sector = processedValue;
       else if (fieldName === 'previousGrantFunding') data.previousGrantFunding = processedValue;
@@ -377,7 +401,7 @@
           `&technology=${encodeURIComponent(data.technologyType || '')}` +
           `&maturity=${encodeURIComponent(String(data.innovationMaturity ?? '5'))}` +
           `&company=${encodeURIComponent(data.companyName || '')}`;
-        goto(url);
+        window.location.href = url; // Direct browser navigation to ensure it works in all cases
       } else {
         throw new Error('Failed to submit onboarding data');
       }
@@ -532,6 +556,17 @@
               type={currentStepData.type}
               label={currentStepData.title}
               bind:value={data.employeeCount}
+              placeholder={currentStepData.placeholder}
+              options={currentStepData.options || []}
+              autofocus={currentStepData.autofocus}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
+          {:else if currentStepData.field === 'companyAge'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.companyAge}
               placeholder={currentStepData.placeholder}
               options={currentStepData.options || []}
               autofocus={currentStepData.autofocus}

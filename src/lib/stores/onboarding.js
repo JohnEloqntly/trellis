@@ -11,6 +11,7 @@ const initialData = {
   // Company information
   companyName: '',
   employeeCount: '',
+  companyAge: '',
   website: '',
   sector: '',
 
