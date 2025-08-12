@@ -44,9 +44,19 @@
   });
   
   const steps = [
-    // Company section
+    // Company section intro
     {
       id: 1,
+      title: "First, tell us about your company",
+      subtitle: "This information helps us match you to the right funding opportunities",
+      field: 'company_intro',
+      type: 'intro',
+      icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+             </svg>`
+    },
+    {
+      id: 2,
       title: "Company name",
       subtitle: "Tell us who you are so we can match funding appropriately",
       field: 'companyName',
@@ -61,7 +71,7 @@
              </svg>`
     },
     {
-      id: 2,
+      id: 3,
       title: "Employee count",
       subtitle: "Some programmes target specific organisation sizes",
       field: 'employeeCount',
@@ -83,7 +93,7 @@
              </svg>`
     },
     {
-      id: 3,
+      id: 4,
       title: "Company website",
       subtitle: "We'll review your work to find the most relevant opportunities",
       field: 'website',
@@ -98,7 +108,7 @@
              </svg>`
     },
     {
-      id: 4,
+      id: 5,
       title: "Which sector do you operate in?",
       subtitle: "This helps us find sector-specific funding opportunities",
       field: 'sector',
@@ -111,9 +121,37 @@
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
              </svg>`
     },
-    // Project section
     {
-      id: 5,
+      id: 6,
+      title: "Has your company applied for grant funding before?",
+      subtitle: "Previous grant experience can affect eligibility for certain programmes",
+      field: 'previousGrantFunding',
+      type: 'select',
+      placeholder: 'Select an option',
+      options: [
+        'Yes, successfully received funding',
+        'Yes, but was unsuccessful',
+        'No, first time applying',
+        'Not sure'
+      ],
+      autofocus: true,
+      icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+             </svg>`
+    },
+    // Project section intro
+    {
+      id: 7,
+      title: "Now, tell us about your project",
+      subtitle: "Grant funding is project-based. These details help match you with relevant opportunities",
+      field: 'project_intro',
+      type: 'intro',
+      icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+             </svg>`
+    },
+    {
+      id: 8,
       title: "What is the name of your project?",
       subtitle: "We’ll match funding to the specific project you’re working on",
       field: 'projectName',
@@ -128,7 +166,7 @@
              </svg>`
     },
     {
-      id: 6,
+      id: 9,
       title: "What problem are you solving?",
       subtitle: "Briefly describe the core problem your project addresses",
       field: 'problemStatement',
@@ -143,8 +181,8 @@
              </svg>`
     },
     {
-      id: 7,
-      title: "What’s the solution?",
+      id: 10,
+      title: "What's the solution?",
       subtitle: "Explain how your project solves the problem",
       field: 'solutionApproach',
       type: 'textarea',
@@ -158,7 +196,7 @@
              </svg>`
     },
     {
-      id: 8,
+      id: 11,
       title: "What technology are you leveraging?",
       subtitle: "What's the core technology behind your innovation?",
       field: 'technologyType',
@@ -173,7 +211,7 @@
              </svg>`
     },
     {
-      id: 9,
+      id: 12,
       title: "What other sectors outside your own benefit?",
       subtitle: "List any adjacent sectors that your project positively impacts",
       field: 'crossSectors',
@@ -183,7 +221,7 @@
       autofocus: true,
     },
     {
-      id: 10,
+      id: 13,
       title: "TRL Explainer",
       subtitle: "Technology Readiness Level helps align you to the right funding stage",
       field: 'trlExplainer',
@@ -197,7 +235,7 @@
              </svg>`
     },
     {
-      id: 11,
+      id: 14,
       title: "What is your TRL level?",
       subtitle: "How developed is your technology? (Based on NASA TRL scale)",
       field: 'innovationMaturity',
@@ -270,6 +308,7 @@
       else if (fieldName === 'employeeCount') data.employeeCount = processedValue;
       else if (fieldName === 'website') data.website = processedValue;
       else if (fieldName === 'sector') data.sector = processedValue;
+      else if (fieldName === 'previousGrantFunding') data.previousGrantFunding = processedValue;
       else if (fieldName === 'projectName') data.projectName = processedValue;
       else if (fieldName === 'problemStatement') data.problemStatement = processedValue;
       else if (fieldName === 'solutionApproach') data.solutionApproach = processedValue;
@@ -419,7 +458,7 @@
           </h1>
            <!-- Section badge: Company vs Project -->
            <div class="mb-2">
-             {#if currentStepValue <= 4}
+             {#if currentStepValue <= 6}
                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-primary-blue border border-blue-100">Company</span>
              {:else}
                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100">Project</span>
@@ -434,7 +473,17 @@
         
         <!-- Step Field -->
         <div class="mb-8">
-          {#if currentStepData.field === 'name'}
+          {#if currentStepData.type === 'intro'}
+            <div class="bg-gradient-to-br from-primary-blue/5 to-secondary-blue/5 rounded-xl border border-primary-blue/10 p-6 mb-4">
+              <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-primary-blue to-secondary-blue rounded-lg flex items-center justify-center mr-4">
+                  {@html currentStepData.icon}
+                </div>
+                <h3 class="text-xl font-gt-walsheim-bold text-gray-800">{currentStepData.title}</h3>
+              </div>
+              <p class="text-gray-700">{currentStepData.subtitle}</p>
+            </div>
+          {:else if currentStepData.field === 'name'}
             <StepField
               type={currentStepData.type}
               label={currentStepData.title}
@@ -576,6 +625,17 @@
               autocomplete={currentStepData.autocomplete}
               autofocus={currentStepData.autofocus}
               options={currentStepData.options || []}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
+          {:else if currentStepData.field === 'previousGrantFunding'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.previousGrantFunding}
+              placeholder={currentStepData.placeholder}
+              options={currentStepData.options || []}
+              autofocus={currentStepData.autofocus}
               on:input={handleFieldInput}
               on:enter={handleEnter}
             />

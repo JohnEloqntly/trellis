@@ -21,6 +21,7 @@ const initialData = {
   technologyType: '',
   crossSectors: '',
   innovationMaturity: 5,
+  previousGrantFunding: '',
   
   // Narrative
   elevatorPitch: ''

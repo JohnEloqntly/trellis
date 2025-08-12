@@ -102,23 +102,32 @@
   
   {#if type === 'select'}
     {#if multiple}
-      <select
-        id={`field-${label}`}
-        bind:this={inputElement}
-        multiple
-        bind:value
-        on:change={handleInput}
-        on:keydown={handleKeydown}
-        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-colors duration-200 text-gray-900 bg-white"
-        class:border-red-300={error}
-        class:focus:ring-red-500={error}
-        aria-invalid={error ? 'true' : 'false'}
-        aria-describedby={error ? `${label}-error` : null}
-      >
+      <div class="space-y-3 max-h-60 overflow-y-auto border border-gray-300 rounded-lg p-3 bg-white">
+        <div class="text-sm text-gray-500 mb-2 italic">Select all that apply</div>
         {#each options as option}
-          <option value={option}>{option}</option>
+          <div class="flex items-center">
+            <input 
+              type="checkbox" 
+              id={`${label}-${option}`}
+              class="w-4 h-4 text-primary-blue border-gray-300 rounded focus:ring-primary-blue"
+              checked={Array.isArray(value) && value.includes(option)}
+              on:change={(e) => {
+                let newValue = Array.isArray(value) ? [...value] : [];
+                if (e.target.checked) {
+                  if (!newValue.includes(option)) newValue.push(option);
+                } else {
+                  newValue = newValue.filter(v => v !== option);
+                }
+                value = newValue;
+                handleInput({ target: { value: newValue } });
+              }}
+            />
+            <label for={`${label}-${option}`} class="ml-2 text-sm font-medium text-gray-700">
+              {option}
+            </label>
+          </div>
         {/each}
-      </select>
+      </div>
     {:else}
       <select
         id={`field-${label}`}
