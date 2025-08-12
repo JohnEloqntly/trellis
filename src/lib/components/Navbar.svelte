@@ -55,6 +55,12 @@
         >
           Pricing
         </span>
+        <a 
+          href="/team" 
+          class="text-gray-700 font-medium px-3 py-2 hover:text-primary-blue transition-colors duration-200"
+        >
+          Our Team
+        </a>
         <span 
           class="text-gray-700 font-medium px-3 py-2"
         >
@@ -97,6 +103,13 @@
           >
             Pricing
           </span>
+          <a 
+            href="/team" 
+            class="block text-gray-700 font-medium px-3 py-3 text-lg hover:text-primary-blue transition-colors duration-200"
+            on:click={closeMobileMenu}
+          >
+            Our Team
+          </a>
           <span 
             class="block text-gray-700 font-medium px-3 py-3 text-lg"
           >
