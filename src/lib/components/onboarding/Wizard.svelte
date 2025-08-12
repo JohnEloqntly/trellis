@@ -245,8 +245,8 @@
     },
     {
       id: 14,
-      title: "TRL Explainer",
-      subtitle: "Technology Readiness Level helps align you to the right funding stage",
+      title: "",
+      subtitle: "",
       field: 'trlExplainer',
       type: 'info',
       placeholder: '',
@@ -756,9 +756,9 @@
               </div>
               
               <!-- Content -->
-              <div class="relative z-10 p-6">
+              <div class="relative z-10 p-8">
                 <!-- Icon in floating card -->
-                <div class="absolute top-6 right-6 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center transform rotate-3">
+                <div class="absolute top-8 right-8 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center transform rotate-3">
                   <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-violet-600 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -766,30 +766,30 @@
                   </div>
                 </div>
                 
-                <h3 class="text-2xl font-gt-walsheim-bold mb-4 pr-20">
+                <h3 class="text-2xl font-gt-walsheim-bold mb-6 pr-24 text-gray-900">
                   <span class="bg-gradient-to-r from-purple-600 to-violet-500 bg-clip-text text-transparent">Technology Readiness Level</span> explained
                 </h3>
                 
-                <p class="text-gray-700 mb-4">TRL is a standardized scale (1-9) used by funding bodies to determine which stage of development they will fund. Understanding your TRL helps us match you to appropriate grants.</p>
+                <p class="text-gray-700 mb-6">TRL is a standardized scale (1-9) used by funding bodies to determine which stage of development they will fund. Understanding your TRL helps us match you to appropriate grants.</p>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                  <div class="bg-white/80 rounded-lg p-3 border border-purple-100 shadow-sm">
-                    <div class="font-semibold text-purple-800 mb-1">Early Stage (TRL 1-3)</div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                  <div class="bg-white/80 rounded-lg p-4 border border-purple-100 shadow-sm">
+                    <div class="font-semibold text-purple-800 mb-2">Early Stage (TRL 1-3)</div>
                     <p class="text-sm text-gray-600">Basic research, concept formulation, and experimental proof of concept. Typically funded by research grants.</p>
                   </div>
                   
-                  <div class="bg-white/80 rounded-lg p-3 border border-purple-100 shadow-sm">
-                    <div class="font-semibold text-purple-800 mb-1">Mid Stage (TRL 4-6)</div>
+                  <div class="bg-white/80 rounded-lg p-4 border border-purple-100 shadow-sm">
+                    <div class="font-semibold text-purple-800 mb-2">Mid Stage (TRL 4-6)</div>
                     <p class="text-sm text-gray-600">Technology validation in lab and relevant environments. Often funded by development and demonstration grants.</p>
                   </div>
                   
-                  <div class="bg-white/80 rounded-lg p-3 border border-purple-100 shadow-sm">
-                    <div class="font-semibold text-purple-800 mb-1">Late Stage (TRL 7-9)</div>
+                  <div class="bg-white/80 rounded-lg p-4 border border-purple-100 shadow-sm">
+                    <div class="font-semibold text-purple-800 mb-2">Late Stage (TRL 7-9)</div>
                     <p class="text-sm text-gray-600">System prototype demonstration, qualification, and operational deployment. Typically funded by commercialization grants.</p>
                   </div>
                 </div>
                 
-                <div class="text-sm text-gray-600 italic">
+                <div class="text-sm text-gray-600 italic mt-4">
                   On the next screen, you'll select your specific TRL level to help us find the most appropriate funding opportunities.
                 </div>
               </div>
