@@ -14,13 +14,13 @@
     {
       name: "Bob Leung",
       title: "CEO & Chairman",
-      photo: "/team/bob-leung.jpg",
+      photo: "/team/bob-leung.webp",
       bio: "Bob leads Trellis with a strategic vision to democratize access to grant funding and empower innovative companies to reach their full potential."
     },
     {
       name: "Mark Wedel",
       title: "Strategic Funding Advisor",
-      photo: "/team/mark-wedel.jpg",
+      photo: "/team/mark-wedel.jpeg",
       bio: "With extensive experience in the funding landscape, Mark provides strategic guidance to ensure Trellis connects clients with the most suitable funding opportunities."
     },
     {
@@ -32,13 +32,13 @@
     {
       name: "Stuart Semple",
       title: "Head of Grants",
-      photo: "/team/stuart-semple.jpg",
+      photo: "/team/stuart-semple.jpeg",
       bio: "Stuart's deep knowledge of grant applications and funding criteria helps our clients maximize their chances of success across various funding bodies."
     },
     {
       name: "Nicky Attenborough",
-      title: "Head of Getting Shit Done",
-      photo: "/team/nicky-attenborough.jpg",
+      title: "Head of Magic & Getting Shit Done",
+      photo: "/team/nicky-attenborough.png",
       bio: "Nicky ensures that operations run smoothly, projects stay on track, and the team delivers exceptional results for every client."
     }
   ];
