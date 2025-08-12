@@ -437,15 +437,15 @@
   
   <!-- Wizard Card with Clean Portal Styling -->
   <div 
-    class="{currentStepValue <= 7 ? 'bg-blue-50/20' : 'bg-emerald-50/20'} rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300"
+    class="{currentStepValue <= 7 ? 'bg-blue-50/20' : 'bg-blue-50/10'} rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300"
     role="dialog"
     aria-labelledby="wizard-title"
     aria-live="polite"
   >
     <!-- Progress Bar Section -->
     <div class="p-6 sm:p-8 pb-4 border-b" 
-         class:border-blue-100={currentStepValue <= 7} 
-         class:border-emerald-100={currentStepValue > 7}>
+         class:border-blue-200={currentStepValue <= 7} 
+         class:border-blue-100={currentStepValue > 7}>
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 bg-gradient-to-br from-primary-blue to-secondary-blue rounded-xl flex items-center justify-center">
@@ -479,6 +479,7 @@
              >
         <!-- Step Header with Encouragement -->
         <div class="mb-8">
+          {#if currentStepData.type !== 'intro'}
           <h1 id="wizard-title" class="text-2xl sm:text-3xl font-gt-walsheim-bold text-gray-900 mb-3 leading-tight">
             {currentStepData.title}
           </h1>
@@ -486,7 +487,7 @@
           <p class="text-gray-600 text-base mb-4 leading-relaxed">
             {currentStepData.subtitle}
           </p>
-          
+          {/if}
 
         </div>
         
@@ -520,7 +521,7 @@
                   
                   <!-- Title with gradient text -->
                   <h3 class="text-3xl font-gt-walsheim-bold mb-4 mt-8 max-w-[70%]">
-                    First, tell us about your <span class="bg-gradient-to-r from-primary-blue to-blue-500 bg-clip-text text-transparent">company</span>
+                    <span class="text-gray-900">First, tell us about your</span> <span class="bg-gradient-to-r from-primary-blue to-blue-500 bg-clip-text text-transparent">company</span>
                   </h3>
                   
                   <!-- Description with icon bullets -->
@@ -551,12 +552,12 @@
               <!-- Enhanced Project Introduction -->
               <div class="relative overflow-hidden rounded-2xl">
                 <!-- Stylish background with gradient and patterns -->
-                <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-teal-50 opacity-90 z-0"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50/50 opacity-90 z-0"></div>
                 <div class="absolute inset-0 z-0">
                   <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <pattern id="project-dots" width="20" height="20" patternUnits="userSpaceOnUse">
-                        <circle cx="10" cy="10" r="1.5" fill="#059669" opacity="0.3" />
+                        <circle cx="10" cy="10" r="1.5" fill="#4F46E5" opacity="0.15" />
                       </pattern>
                     </defs>
                     <rect width="100%" height="100%" fill="url(#project-dots)" />
@@ -567,14 +568,14 @@
                 <div class="relative z-10 p-8">
                   <!-- Icon in floating card -->
                   <div class="absolute top-6 right-8 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center transform -rotate-6">
-                    <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-500 rounded-xl flex items-center justify-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-blue-500 rounded-xl flex items-center justify-center">
                       {@html currentStepData.icon}
                     </div>
                   </div>
                   
                   <!-- Title with gradient text -->
                   <h3 class="text-3xl font-gt-walsheim-bold mb-4 mt-8 max-w-[70%]">
-                    Now, tell us about your <span class="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent">project</span>
+                    <span class="text-gray-900">Now, tell us about your</span> <span class="bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent">project</span>
                   </h3>
                   
                   <!-- Description with icon bullets -->
@@ -583,16 +584,16 @@
                   <!-- Benefits -->
                   <div class="space-y-4 mb-6">
                     <div class="flex items-center">
-                      <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center mr-3">
-                        <svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                      <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                        <svg class="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
                       </div>
                       <p class="text-sm text-gray-700">Grants fund specific projects, not general company operations</p>
                     </div>
                     <div class="flex items-center">
-                      <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center mr-3">
-                        <svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                      <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                        <svg class="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
                       </div>
