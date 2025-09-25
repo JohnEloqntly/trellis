@@ -3,11 +3,15 @@
   import { onMount } from 'svelte';
   import { fade, slide } from 'svelte/transition';
   import { goto } from '$app/navigation';
+  import { currentProjectWriters, toggleWriter } from '$lib/stores/projectSaves.js';
   
   let writer: any = null;
-  let isSaved = false;
   let mounted = false;
   let showSaveSuccess = false;
+  
+  // Get project-scoped saved writers
+  $: savedWriters = $currentProjectWriters;
+  $: isSaved = writer ? savedWriters.includes(writer.id) : false;
   let showContactModal = false;
   let showContactSuccess = false;
   let contactForm = {
@@ -456,28 +460,17 @@ His approach combines technical expertise with commercial understanding, enablin
       return;
     }
     
-    // Check if this writer is saved
-    const savedWriters = JSON.parse(localStorage.getItem('savedWriters') || '[]');
-    isSaved = savedWriters.includes(writer.id);
+    // isSaved is now reactive based on project-scoped store
   });
   
   function toggleSave() {
     if (!writer) return;
     
-    const savedWriters = JSON.parse(localStorage.getItem('savedWriters') || '[]');
+    // Use project-scoped toggle
+    toggleWriter(writer.id);
     
-    if (isSaved) {
-      // Remove from saved
-      const updated = savedWriters.filter((id: number) => id !== writer.id);
-      localStorage.setItem('savedWriters', JSON.stringify(updated));
-      isSaved = false;
-    } else {
-      // Add to saved
-      savedWriters.push(writer.id);
-      localStorage.setItem('savedWriters', JSON.stringify(savedWriters));
-      isSaved = true;
-      
-      // Show success message
+    // Show success message if saving (not unsaving)
+    if (!isSaved) {
       showSaveSuccess = true;
       setTimeout(() => {
         showSaveSuccess = false;
