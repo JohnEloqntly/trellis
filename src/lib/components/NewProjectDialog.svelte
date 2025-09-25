@@ -158,7 +158,7 @@
             id="projectName"
             type="text"
             bind:value={formData.name}
-            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200"
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
             placeholder="e.g., AI-Powered Crop Monitoring System"
             required
           />
@@ -173,7 +173,7 @@
             id="description"
             bind:value={formData.description}
             rows="3"
-            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200"
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
             placeholder="Brief description of your project..."
           ></textarea>
         </div>
@@ -187,7 +187,7 @@
             <select
               id="sector"
               bind:value={formData.sector}
-              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200"
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
               required
             >
               <option value="">Select sector</option>
@@ -204,7 +204,7 @@
             <select
               id="technology"
               bind:value={formData.technology}
-              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200"
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
               required
             >
               <option value="">Select technology</option>
@@ -242,7 +242,7 @@
             id="problemStatement"
             bind:value={formData.problemStatement}
             rows="3"
-            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200"
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
             placeholder="What problem does this project solve?"
           ></textarea>
         </div>
@@ -256,7 +256,7 @@
             id="solutionApproach"
             bind:value={formData.solutionApproach}
             rows="3"
-            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200"
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
             placeholder="How will you solve this problem?"
           ></textarea>
         </div>
