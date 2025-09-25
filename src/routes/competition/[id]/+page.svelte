@@ -283,7 +283,7 @@
     });
     
     const labelPoints = criteria.map((item: any, i: number) => {
-      const radius = maxRadius + 25;
+      const radius = maxRadius + 35; // Increased from 25 to 35 for more space
       const x = centerX + radius * Math.cos(angles[i]);
       const y = centerY + radius * Math.sin(angles[i]);
       return { x, y, name: item.name };
@@ -497,7 +497,7 @@
                 
                 <!-- Spider Chart (Always Visible) -->
                 <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200 mb-6">
-                  <h3 class="text-lg font-gt-walsheim-bold text-gray-900 mb-4 text-center">Performance Radar</h3>
+                  <h3 class="text-lg font-gt-walsheim-bold text-gray-900 mb-4 text-center">How You Stack Up</h3>
                   {#if spiderData}
                     <div class="flex justify-center">
                       <svg width="300" height="300" viewBox="0 0 300 300" class="max-w-full h-auto">
@@ -554,7 +554,7 @@
                             text-anchor="middle" 
                             dy="0.35em" 
                             fill="#374151" 
-                            font-size="10" 
+                            font-size="12" 
                             font-weight="600"
                             class="font-gt-walsheim-bold"
                           >
