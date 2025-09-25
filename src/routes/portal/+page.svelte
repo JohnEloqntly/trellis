@@ -5,17 +5,17 @@
   import { fade, slide } from 'svelte/transition';
   import Sidebar from '$lib/components/Sidebar.svelte';
   import TopAppBar from '$lib/components/TopAppBar.svelte';
-  import { projectsStore } from '$lib/stores/projects.js';
-  import { projectSavesStore } from '$lib/stores/projectSaves.js';
+  import { activeProject, projects } from '$lib/stores/projects.js';
+  import { currentProjectCompetitions, currentProjectWriters, toggleCompetition, toggleWriter } from '$lib/stores/projectSaves.js';
   
   let mounted = false;
   let activeSection = 'matches';
   let sidebarExpanded = true;
 
   // Get project-scoped data
-  $: activeProject = $projectsStore.activeProject;
-  $: savedCompetitions = $projectSavesStore.currentProjectCompetitions;
-  $: savedWriters = $projectSavesStore.currentProjectWriters;
+  $: currentProject = $activeProject;
+  $: savedCompetitions = $currentProjectCompetitions;
+  $: savedWriters = $currentProjectWriters;
   
   // Handle section change from sidebar
   function handleSectionChange(section: string) {
@@ -23,14 +23,14 @@
   }
 
   // Filter grants based on active project
-  $: projectMatches = activeProject ? allGrants.filter(grant => {
+  $: projectMatches = currentProject ? allGrants.filter(grant => {
     // Match by sector, technology, or general relevance
-    const sectorMatch = grant.sector === activeProject.sector;
+    const sectorMatch = grant.sector === currentProject.sector;
     const technologyMatch = grant.tags?.some(tag => 
-      tag.toLowerCase().includes(activeProject.technology.toLowerCase()) ||
-      activeProject.technology.toLowerCase().includes(tag.toLowerCase())
+      tag.toLowerCase().includes(currentProject.technology.toLowerCase()) ||
+      currentProject.technology.toLowerCase().includes(tag.toLowerCase())
     );
-    const trlMatch = Math.abs(grant.matchScore - (activeProject.trl * 10)) <= 20;
+    const trlMatch = Math.abs(grant.matchScore - (currentProject.trl * 10)) <= 20;
     
     return sectorMatch || technologyMatch || trlMatch;
   }).sort((a, b) => b.matchScore - a.matchScore) : allGrants;
@@ -441,11 +441,11 @@
   }
   
   function toggleSaveCompetition(competitionId: number) {
-    projectSavesStore.toggleCompetition(competitionId);
+    toggleCompetition(competitionId);
   }
   
   function toggleSaveWriter(writerId: number) {
-    projectSavesStore.toggleWriter(writerId);
+    toggleWriter(writerId);
   }
   
   function isCompetitionSaved(competitionId: number): boolean {
@@ -523,16 +523,16 @@
           <div class="space-y-6" in:fade={{ duration: 300 }}>
             {#if activeSection === 'matches'}
               <!-- Project Context Bar -->
-              {#if activeProject}
+              {#if currentProject}
                 <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6" in:fade={{ duration: 400 }}>
                   <div class="flex items-start justify-between">
                     <div>
-                      <h3 class="text-xl font-gt-walsheim-bold text-gray-900 mb-2">{activeProject.name}</h3>
-                      <p class="text-gray-600 mb-3">{activeProject.description}</p>
+                      <h3 class="text-xl font-gt-walsheim-bold text-gray-900 mb-2">{currentProject.name}</h3>
+                      <p class="text-gray-600 mb-3">{currentProject.description}</p>
                       <div class="flex items-center space-x-4 text-sm text-gray-500">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-lg">{activeProject.sector}</span>
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-lg">{activeProject.technology}</span>
-                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-lg">TRL {activeProject.trl}</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-lg">{currentProject.sector}</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-lg">{currentProject.technology}</span>
+                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-lg">TRL {currentProject.trl}</span>
                       </div>
                     </div>
                   </div>

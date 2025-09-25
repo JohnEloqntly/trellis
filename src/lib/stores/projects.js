@@ -105,3 +105,4 @@ function createProjectsStore() {
 }
 
 export const projectsStore = createProjectsStore();
+export const { projects, activeProjectId, activeProject, createProject, setActiveProject, updateProject, deleteProject } = projectsStore;

@@ -1,21 +1,21 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { projectsStore } from '$lib/stores/projects.js';
+  import { activeProject, projects, setActiveProject } from '$lib/stores/projects.js';
   import { fade, slide } from 'svelte/transition';
 
   const dispatch = createEventDispatcher();
   
   let showDropdown = false;
   
-  $: activeProject = $projectsStore.activeProject;
-  $: allProjects = $projectsStore.projects;
+  $: currentActiveProject = $activeProject;
+  $: allProjects = $projects;
 
   function toggleDropdown() {
     showDropdown = !showDropdown;
   }
 
   function selectProject(projectId: string) {
-    projectsStore.setActiveProject(projectId);
+    setActiveProject(projectId);
     showDropdown = false;
   }
 
@@ -48,7 +48,7 @@
   >
     <div class="w-2 h-2 bg-emerald-500 rounded-full"></div>
     <span class="font-medium text-gray-900 max-w-48 truncate">
-      {activeProject?.name || 'Select Project'}
+      {currentActiveProject?.name || 'Select Project'}
     </span>
     <svg class="w-4 h-4 text-gray-500 transition-transform duration-200" class:rotate-180={showDropdown} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -73,15 +73,15 @@
           <button
             on:click={() => selectProject(project.id)}
             class="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100 last:border-b-0"
-            class:bg-blue-50={project.id === activeProject?.id}
-            class:border-blue-200={project.id === activeProject?.id}
+            class:bg-blue-50={project.id === currentActiveProject?.id}
+            class:border-blue-200={project.id === currentActiveProject?.id}
           >
             <div class="flex items-start justify-between">
               <div class="flex-1 min-w-0">
                 <div class="flex items-center space-x-2">
                   <div class="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0"></div>
                   <h4 class="font-medium text-gray-900 truncate">{project.name}</h4>
-                  {#if project.id === activeProject?.id}
+                  {#if project.id === currentActiveProject?.id}
                     <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>

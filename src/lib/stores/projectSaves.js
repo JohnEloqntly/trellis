@@ -155,3 +155,18 @@ function createProjectSavesStore() {
 }
 
 export const projectSavesStore = createProjectSavesStore();
+export const { 
+  saves, 
+  currentProjectCompetitions, 
+  currentProjectWriters,
+  saveCompetition,
+  unsaveCompetition,
+  isCompetitionSaved,
+  saveWriter,
+  unsaveWriter,
+  isWriterSaved,
+  getProjectCompetitions,
+  getProjectWriters,
+  toggleCompetition,
+  toggleWriter
+} = projectSavesStore;

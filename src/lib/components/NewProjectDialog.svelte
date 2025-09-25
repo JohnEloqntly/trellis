@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { projectsStore } from '$lib/stores/projects.js';
+  import { createProject } from '$lib/stores/projects.js';
   import { fade, scale } from 'svelte/transition';
 
   const dispatch = createEventDispatcher();
@@ -76,7 +76,7 @@
 
     try {
       // Create the project
-      const newProject = projectsStore.createProject(formData);
+      const newProject = createProject(formData);
       
       // Close dialog and notify parent
       closeDialog();
