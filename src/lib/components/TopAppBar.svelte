@@ -1,9 +1,12 @@
 <script lang="ts">
   import AccountDropdown from './AccountDropdown.svelte';
+  import ProjectDropdown from './ProjectDropdown.svelte';
+  import NewProjectDialog from './NewProjectDialog.svelte';
   
   export let sidebarExpanded = true;
   
   let showAccountDropdown = false;
+  let showNewProjectDialog = false;
   
   function toggleAccountDropdown() {
     showAccountDropdown = !showAccountDropdown;
@@ -12,11 +15,19 @@
   function closeDropdown() {
     showAccountDropdown = false;
   }
+
+  function openNewProjectDialog() {
+    showNewProjectDialog = true;
+  }
+
+  function closeNewProjectDialog() {
+    showNewProjectDialog = false;
+  }
   
   // Close dropdown when clicking outside
   function handleClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
-    if (!target.closest('.account-dropdown-container')) {
+    if (!target.closest('.account-dropdown-container') && !target.closest('.project-dropdown-container')) {
       showAccountDropdown = false;
     }
   }
@@ -29,7 +40,10 @@
   class:left-80={sidebarExpanded}
   class:left-20={!sidebarExpanded}
 >
-  <div class="h-full flex items-center justify-end px-6">
+  <div class="h-full flex items-center justify-end px-6 space-x-4">
+    <!-- Project Dropdown -->
+    <ProjectDropdown on:new-project={openNewProjectDialog} />
+    
     <!-- Company Logo / Account Trigger -->
     <div class="account-dropdown-container relative">
       <button 
@@ -50,6 +64,13 @@
     </div>
   </div>
 </div>
+
+<!-- New Project Dialog -->
+<NewProjectDialog 
+  bind:isOpen={showNewProjectDialog}
+  on:close={closeNewProjectDialog}
+  on:project-created={closeNewProjectDialog}
+/>
 
 <style>
   :global(.account-dropdown-container) {

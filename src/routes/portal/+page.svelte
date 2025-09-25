@@ -5,17 +5,35 @@
   import { fade, slide } from 'svelte/transition';
   import Sidebar from '$lib/components/Sidebar.svelte';
   import TopAppBar from '$lib/components/TopAppBar.svelte';
+  import { projectsStore } from '$lib/stores/projects.js';
+  import { projectSavesStore } from '$lib/stores/projectSaves.js';
   
   let mounted = false;
   let activeSection = 'matches';
-  let savedCompetitions: number[] = [];
-  let savedWriters: number[] = [];
   let sidebarExpanded = true;
+
+  // Get project-scoped data
+  $: activeProject = $projectsStore.activeProject;
+  $: savedCompetitions = $projectSavesStore.currentProjectCompetitions;
+  $: savedWriters = $projectSavesStore.currentProjectWriters;
   
   // Handle section change from sidebar
   function handleSectionChange(section: string) {
     activeSection = section;
   }
+
+  // Filter grants based on active project
+  $: projectMatches = activeProject ? allGrants.filter(grant => {
+    // Match by sector, technology, or general relevance
+    const sectorMatch = grant.sector === activeProject.sector;
+    const technologyMatch = grant.tags?.some(tag => 
+      tag.toLowerCase().includes(activeProject.technology.toLowerCase()) ||
+      activeProject.technology.toLowerCase().includes(tag.toLowerCase())
+    );
+    const trlMatch = Math.abs(grant.matchScore - (activeProject.trl * 10)) <= 20;
+    
+    return sectorMatch || technologyMatch || trlMatch;
+  }).sort((a, b) => b.matchScore - a.matchScore) : allGrants;
   
   // Expanded grant data - significantly more competitions
   const allGrants = [
@@ -423,27 +441,11 @@
   }
   
   function toggleSaveCompetition(competitionId: number) {
-    if (savedCompetitions.includes(competitionId)) {
-      savedCompetitions = savedCompetitions.filter(id => id !== competitionId);
-    } else {
-      savedCompetitions = [...savedCompetitions, competitionId];
-    }
-    localStorage.setItem('savedCompetitions', JSON.stringify(savedCompetitions));
-    
-    // Update displays by triggering reactivity
-    displayedGrants = displayedGrants;
+    projectSavesStore.toggleCompetition(competitionId);
   }
   
   function toggleSaveWriter(writerId: number) {
-    if (savedWriters.includes(writerId)) {
-      savedWriters = savedWriters.filter(id => id !== writerId);
-    } else {
-      savedWriters = [...savedWriters, writerId];
-    }
-    localStorage.setItem('savedWriters', JSON.stringify(savedWriters));
-    
-    // Update displays by triggering reactivity
-    displayedWriters = displayedWriters;
+    projectSavesStore.toggleWriter(writerId);
   }
   
   function isCompetitionSaved(competitionId: number): boolean {
@@ -520,9 +522,26 @@
           <!-- Content -->
           <div class="space-y-6" in:fade={{ duration: 300 }}>
             {#if activeSection === 'matches'}
+              <!-- Project Context Bar -->
+              {#if activeProject}
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6" in:fade={{ duration: 400 }}>
+                  <div class="flex items-start justify-between">
+                    <div>
+                      <h3 class="text-xl font-gt-walsheim-bold text-gray-900 mb-2">{activeProject.name}</h3>
+                      <p class="text-gray-600 mb-3">{activeProject.description}</p>
+                      <div class="flex items-center space-x-4 text-sm text-gray-500">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-lg">{activeProject.sector}</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-lg">{activeProject.technology}</span>
+                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-lg">TRL {activeProject.trl}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {/if}
+
               <!-- My Matches -->
               <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                {#each displayedGrants as grant}
+                {#each projectMatches as grant}
                   <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6">
                     <div class="flex items-start justify-between mb-4">
                       <div class="flex-1">
