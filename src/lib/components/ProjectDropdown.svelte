@@ -79,16 +79,16 @@
             <div class="flex items-start justify-between">
               <div class="flex-1 min-w-0">
                 <div class="flex items-center space-x-2">
-                  <div class="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0"></div>
-                  <h4 class="font-medium text-gray-900 truncate">{project.name}</h4>
+                  <div class="w-2 h-2 rounded-full flex-shrink-0" class:bg-emerald-500={project.id === currentActiveProject?.id} class:bg-gray-300={project.id !== currentActiveProject?.id}></div>
+                  <h4 class="font-medium truncate" class:text-gray-900={project.id === currentActiveProject?.id} class:text-gray-500={project.id !== currentActiveProject?.id}>{project.name}</h4>
                   {#if project.id === currentActiveProject?.id}
                     <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                   {/if}
                 </div>
-                <p class="text-sm text-gray-600 mt-1 truncate">{project.description}</p>
-                <div class="flex items-center space-x-3 mt-2 text-xs text-gray-500">
+                <p class="text-sm mt-1 truncate" class:text-gray-600={project.id === currentActiveProject?.id} class:text-gray-400={project.id !== currentActiveProject?.id}>{project.description}</p>
+                <div class="flex items-center space-x-3 mt-2 text-xs" class:text-gray-500={project.id === currentActiveProject?.id} class:text-gray-400={project.id !== currentActiveProject?.id}>
                   <span>{project.sector}</span>
                   <span>•</span>
                   <span>{project.technology}</span>

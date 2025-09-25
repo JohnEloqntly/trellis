@@ -16,6 +16,13 @@
   // Get all projects from store
   $: allProjects = $projects;
   $: currentActiveProjectId = $activeProjectId;
+
+  // Mock grant matching stats for each project
+  const projectStats = {
+    'project-agtech': { grants: 8, highMatches: 3, totalValue: '£1.2M' },
+    'project-healthcare': { grants: 12, highMatches: 5, totalValue: '£2.8M' },
+    'project-cleantech': { grants: 15, highMatches: 4, totalValue: '£4.1M' }
+  };
   
   // Handle section change from sidebar
   function handleSectionChange(section: string) {
@@ -53,6 +60,12 @@
       month: 'short',
       year: 'numeric'
     });
+  }
+
+  function runGrantMatch(project) {
+    // Set this project as active and navigate to matches
+    setActiveProject(project.id);
+    window.location.href = '/portal';
   }
 
   onMount(() => {
@@ -132,10 +145,10 @@
                           </button>
                         {/if}
                         <button 
-                          on:click={() => window.location.href = '/portal'}
-                          class="bg-primary-blue text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-blue/90 transition-colors duration-200"
+                          on:click={() => runGrantMatch(project)}
+                          class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-md transition-all duration-200"
                         >
-                          View Matches
+                          Run Grant Match
                         </button>
                         <button 
                           on:click={() => openEditDialog(project)}
@@ -146,8 +159,27 @@
                       </div>
                     </div>
                     
-                    <!-- Project Details -->
+                    <!-- Grant Matching Results -->
                     <div class="bg-gray-50 rounded-lg p-4">
+                      <h5 class="font-medium text-gray-900 mb-3">Latest Grant Match Results</h5>
+                      <div class="grid grid-cols-3 gap-4 text-sm">
+                        <div class="text-center">
+                          <div class="text-lg font-gt-walsheim-bold text-emerald-600">{projectStats[project.id]?.grants || 0}</div>
+                          <div class="text-gray-600">Grants Found</div>
+                        </div>
+                        <div class="text-center">
+                          <div class="text-lg font-gt-walsheim-bold text-primary-blue">{projectStats[project.id]?.highMatches || 0}</div>
+                          <div class="text-gray-600">High Matches</div>
+                        </div>
+                        <div class="text-center">
+                          <div class="text-lg font-gt-walsheim-bold text-cta-pink">{projectStats[project.id]?.totalValue || '£0'}</div>
+                          <div class="text-gray-600">Total Value</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Project Details -->
+                    <div class="bg-gray-50 rounded-lg p-4 mt-4">
                       <h5 class="font-medium text-gray-900 mb-3">Project Details</h5>
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div>
