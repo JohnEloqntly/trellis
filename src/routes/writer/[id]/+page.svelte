@@ -773,7 +773,6 @@ His approach combines technical expertise with commercial understanding, enablin
                 </div>
               {/each}
             </div>
-            </div>
           </div>
         </div>
       </div>
