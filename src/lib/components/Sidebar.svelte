@@ -42,21 +42,21 @@
 </script>
 
 <div class="bg-white h-full border-r border-gray-200 shadow-sm transition-all duration-300 relative z-30" class:w-20={!expanded} class:w-80={expanded}>
-  <!-- Top Header Area - Aligned with TopAppBar -->
-  <div class="h-16 flex items-center justify-between px-4 bg-white relative">
-    <!-- Trellis Logo - Top Left Position -->
+  <!-- Fixed Top Header - Exactly 64px height to match TopAppBar -->
+  <div class="h-16 bg-white border-b border-gray-100 px-6 flex items-center justify-between">
+    <!-- Trellis Logo - Positioned to align with company logo -->
     <div class="flex items-center">
       {#if expanded}
-        <img src="/favicon.png" alt="Trellis" class="h-8 w-auto" />
+        <img src="/favicon.png" alt="Trellis" class="h-8 w-auto object-contain" />
       {:else}
         <img src="/favicon.png" alt="Trellis" class="h-8 w-8 object-contain" />
       {/if}
     </div>
     
-    <!-- Toggle Button - Top Right of Sidebar -->
+    <!-- Toggle Button -->
     <button 
       on:click={toggleSidebar}
-      class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors duration-200 relative z-40 bg-white border border-gray-200"
+      class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors duration-200 relative z-50 bg-white border border-gray-200 shadow-sm"
       title={expanded ? 'Collapse sidebar' : 'Expand sidebar'}
     >
       <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,8 +69,8 @@
     </button>
   </div>
 
-  <!-- Navigation Area -->
-  <div class="px-4">
+  <!-- Navigation Section -->
+  <div class="px-4 py-4 bg-white">
     <!-- Navigation -->
     <nav class="space-y-2">
       {#each sections as section}
