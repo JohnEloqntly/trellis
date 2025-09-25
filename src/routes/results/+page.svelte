@@ -152,13 +152,13 @@
   <!-- Top App Bar (behind sidebar) -->
   <TopAppBar sidebarExpanded={false} />
   
-  <div class="flex h-screen pt-16 bg-gray-50">
+  <div class="flex h-screen bg-gray-50">
     <!-- Sidebar -->
     <Sidebar expanded={false} {activeSection} onSectionChange={handleSectionChange} />
     
     <!-- Main Content -->
     <div class="flex-1 overflow-auto">
-    <div class="p-6 lg:p-8">
+    <div class="p-6 lg:p-8 pt-24">
       
       {#if mounted}
         <!-- Header Section -->

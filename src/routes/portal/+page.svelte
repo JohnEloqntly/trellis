@@ -486,7 +486,7 @@
     <!-- Top App Bar (behind sidebar) -->
     <TopAppBar {sidebarExpanded} />
     
-    <div class="flex h-screen pt-16">
+    <div class="flex h-screen">
       <!-- Sidebar Component -->
       <Sidebar 
         bind:expanded={sidebarExpanded} 
@@ -496,7 +496,7 @@
 
       <!-- Main Content -->
       <div class="flex-1 overflow-auto">
-        <div class="p-8">
+        <div class="p-8 pt-24">
 
 
           <!-- Section Header -->

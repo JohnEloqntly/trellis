@@ -315,7 +315,7 @@
     <!-- Top App Bar (behind sidebar) -->
     <TopAppBar sidebarExpanded={sidebarExpanded} />
     
-    <div class="flex h-screen pt-16">
+    <div class="flex h-screen">
       <!-- Collapsed Sidebar -->
       <Sidebar 
         bind:expanded={sidebarExpanded} 
@@ -325,7 +325,7 @@
       
       <!-- Main Content -->
       <div class="flex-1 overflow-auto">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 pt-24">
           <!-- Back Navigation -->
           <div class="mb-8" in:fade={{ duration: 400 }}>
             <button 
