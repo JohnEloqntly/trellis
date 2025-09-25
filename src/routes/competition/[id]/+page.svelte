@@ -270,9 +270,9 @@
   
   // Spider chart calculation
   function generateSpiderChart(criteria: any[]) {
-    const centerX = 150;
-    const centerY = 150;
-    const maxRadius = 100;
+    const centerX = 200;
+    const centerY = 200;
+    const maxRadius = 120;
     const angles = criteria.map((_: any, i: number) => (i * 2 * Math.PI) / criteria.length - Math.PI / 2);
     
     const dataPoints = criteria.map((item: any, i: number) => {
@@ -283,7 +283,7 @@
     });
     
     const labelPoints = criteria.map((item: any, i: number) => {
-      const radius = maxRadius + 35; // Increased from 25 to 35 for more space
+      const radius = maxRadius + 50; // Increased from 35 to 50 for more space
       const x = centerX + radius * Math.cos(angles[i]);
       const y = centerY + radius * Math.sin(angles[i]);
       return { x, y, name: item.name };
@@ -500,7 +500,7 @@
                   <h3 class="text-lg font-gt-walsheim-bold text-gray-900 mb-4 text-center">How You Stack Up</h3>
                   {#if spiderData}
                     <div class="flex justify-center">
-                      <svg width="300" height="300" viewBox="0 0 300 300" class="max-w-full h-auto">
+                      <svg width="400" height="400" viewBox="0 0 400 400" class="max-w-full h-auto">
                         <!-- Grid lines -->
                         {#each spiderData.gridLines as gridLine}
                           <polygon 
@@ -554,7 +554,7 @@
                             text-anchor="middle" 
                             dy="0.35em" 
                             fill="#374151" 
-                            font-size="12" 
+                            font-size="14" 
                             font-weight="600"
                             class="font-gt-walsheim-bold"
                           >
