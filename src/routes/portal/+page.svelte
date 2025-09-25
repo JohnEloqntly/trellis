@@ -688,7 +688,7 @@
                   <p class="text-gray-600">Showing {displayedGrants.length} available funding opportunities</p>
                   <div class="flex items-center space-x-2">
                     <span class="text-sm text-gray-500">Sort by:</span>
-                    <select class="border border-gray-200 rounded-lg px-3 py-1 text-sm">
+                    <select class="border border-gray-200 rounded-lg px-3 py-1 text-sm text-gray-900 bg-white">
                       <option>Match Score</option>
                       <option>Deadline</option>
                       <option>Amount</option>

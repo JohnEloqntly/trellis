@@ -818,6 +818,43 @@
               </div>
             </div>
           </div>
+          <!-- Match Feedback Section -->
+          <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 mt-8" in:slide={{ duration: 500, delay: 700 }}>
+            <div class="text-center">
+              <h2 class="text-2xl font-gt-walsheim-bold text-gray-900 mb-4">How was this match?</h2>
+              <p class="text-gray-600 mb-8">Help us improve our recommendations by letting us know if this was a good fit</p>
+              
+              <div class="flex items-center justify-center space-x-8">
+                <!-- Good Match -->
+                <button class="flex flex-col items-center space-y-3 p-6 rounded-2xl border-2 border-gray-200 hover:border-emerald-300 hover:bg-emerald-50 transition-all duration-300 group">
+                  <div class="w-16 h-16 bg-emerald-100 group-hover:bg-emerald-200 rounded-full flex items-center justify-center transition-colors duration-300">
+                    <svg class="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div class="text-center">
+                    <h3 class="font-gt-walsheim-bold text-gray-900 mb-1">Good Match</h3>
+                    <p class="text-sm text-gray-600">This competition fits my project well</p>
+                  </div>
+                </button>
+
+                <!-- Bad Match -->
+                <button class="flex flex-col items-center space-y-3 p-6 rounded-2xl border-2 border-gray-200 hover:border-red-300 hover:bg-red-50 transition-all duration-300 group">
+                  <div class="w-16 h-16 bg-red-100 group-hover:bg-red-200 rounded-full flex items-center justify-center transition-colors duration-300">
+                    <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div class="text-center">
+                    <h3 class="font-gt-walsheim-bold text-gray-900 mb-1">Poor Match</h3>
+                    <p class="text-sm text-gray-600">This doesn't suit my project</p>
+                  </div>
+                </button>
+              </div>
+              
+              <p class="text-xs text-gray-500 mt-6">Your feedback helps us improve future recommendations</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
