@@ -43,22 +43,17 @@ function createProjectsStore() {
   // Load from localStorage or use defaults
   const getInitialProjects = () => {
     if (!browser) return exampleProjects;
-    try {
-      const stored = localStorage.getItem('trellisProjects');
-      return stored ? JSON.parse(stored) : exampleProjects;
-    } catch {
-      return exampleProjects;
-    }
+    
+    // Force example projects for demo (clear old cache)
+    localStorage.removeItem('trellisProjects');
+    localStorage.removeItem('trellisActiveProjectId');
+    
+    return exampleProjects;
   };
 
   const getInitialActiveId = () => {
-    if (!browser) return exampleProjects[0].id;
-    try {
-      const stored = localStorage.getItem('trellisActiveProjectId');
-      return stored || exampleProjects[0].id;
-    } catch {
-      return exampleProjects[0].id;
-    }
+    // Always start with first example project for demo
+    return exampleProjects[0].id;
   };
 
   // Create stores
