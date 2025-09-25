@@ -5,6 +5,7 @@
   import { goto } from '$app/navigation';
   import Sidebar from '$lib/components/Sidebar.svelte';
   import TopAppBar from '$lib/components/TopAppBar.svelte';
+  import { currentProjectCompetitions, toggleCompetition } from '$lib/stores/projectSaves.js';
   
   let searchParams: {
     sector: string;
@@ -22,7 +23,8 @@
   let hasPaid = false; // Payment status
   let mounted = false;
   let activeSection = 'results';
-  let savedCompetitions: number[] = [];
+  // Get project-scoped saved competitions
+  $: savedCompetitions = $currentProjectCompetitions;
   
   // Create a reactive lookup for saved status that updates when savedCompetitions changes
   $: savedStatus = grants.reduce((acc, grant) => {
@@ -114,14 +116,13 @@
   }
   
   function toggleSave(grantId: number) {
-    if (savedCompetitions.includes(grantId)) {
-      // Remove from saved list
-      savedCompetitions = savedCompetitions.filter((id: number) => id !== grantId);
-    } else {
-      // Add to saved list
-      savedCompetitions = [...savedCompetitions, grantId];
-    }
-    localStorage.setItem('savedCompetitions', JSON.stringify(savedCompetitions));
+    console.log('toggleSave called with grantId:', grantId);
+    console.log('Current savedCompetitions:', savedCompetitions);
+    
+    // Use project-scoped toggle
+    toggleCompetition(grantId);
+    
+    console.log('Project-scoped save toggled for grant:', grantId);
   }
   
   function isSaved(grantId: number) {

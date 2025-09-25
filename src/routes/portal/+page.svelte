@@ -548,13 +548,16 @@
     toggleWriter(writerId);
   }
   
-  function isCompetitionSaved(competitionId: number): boolean {
-    return savedCompetitions.includes(competitionId);
-  }
+  // Create reactive lookup objects for fast save state checking
+  $: competitionSaves = savedCompetitions.reduce((acc, id) => {
+    acc[id] = true;
+    return acc;
+  }, {});
   
-  function isWriterSaved(writerId: number): boolean {
-    return savedWriters.includes(writerId);
-  }
+  $: writerSaves = savedWriters.reduce((acc, id) => {
+    acc[id] = true;
+    return acc;
+  }, {});
   
   function setActiveSection(section: string) {
     activeSection = section;
@@ -655,10 +658,10 @@
                       </button>
                       <button 
                         on:click={() => toggleSaveCompetition(grant.id)}
-                        class="font-semibold px-4 py-2 rounded-xl transition-all duration-200 {isCompetitionSaved(grant.id) ? 'bg-emerald-500 text-white' : 'border border-gray-200 text-gray-700 hover:bg-gray-50'}"
-                        title={isCompetitionSaved(grant.id) ? 'Remove from saved' : 'Save for later'}
+                        class="font-semibold px-4 py-2 rounded-xl transition-all duration-200 {competitionSaves[grant.id] ? 'bg-emerald-500 text-white' : 'border border-gray-200 text-gray-700 hover:bg-gray-50'}"
+                        title={competitionSaves[grant.id] ? 'Remove from saved' : 'Save for later'}
                       >
-                        <svg class="w-4 h-4" fill={isCompetitionSaved(grant.id) ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill={competitionSaves[grant.id] ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                         </svg>
                       </button>
@@ -714,10 +717,10 @@
                       </button>
                       <button 
                         on:click={() => toggleSaveCompetition(grant.id)}
-                        class="font-semibold px-4 py-2 rounded-xl transition-all duration-200 {isCompetitionSaved(grant.id) ? 'bg-emerald-500 text-white' : 'border border-gray-200 text-gray-700 hover:bg-gray-50'}"
-                        title={isCompetitionSaved(grant.id) ? 'Remove from saved' : 'Save for later'}
+                        class="font-semibold px-4 py-2 rounded-xl transition-all duration-200 {competitionSaves[grant.id] ? 'bg-emerald-500 text-white' : 'border border-gray-200 text-gray-700 hover:bg-gray-50'}"
+                        title={competitionSaves[grant.id] ? 'Remove from saved' : 'Save for later'}
                       >
-                        <svg class="w-4 h-4" fill={isCompetitionSaved(grant.id) ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill={competitionSaves[grant.id] ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                         </svg>
                       </button>
@@ -778,11 +781,15 @@
                         </button>
                         <button 
                           on:click={() => toggleSaveWriter(writer.id)}
-                          class="font-semibold px-4 py-2 rounded-xl transition-all duration-200 bg-red-500 text-white hover:bg-red-600"
-                          title="Remove from saved"
+                          class="font-semibold px-4 py-2 rounded-xl transition-all duration-200 {writerSaves[writer.id] ? 'bg-red-500 text-white hover:bg-red-600' : 'border border-gray-200 text-gray-700 hover:bg-gray-50'}"
+                          title={writerSaves[writer.id] ? 'Remove from saved' : 'Save writer'}
                         >
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                          <svg class="w-4 h-4" fill={writerSaves[writer.id] ? 'none' : 'currentColor'} stroke="currentColor" viewBox="0 0 24 24">
+                            {#if writerSaves[writer.id]}
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            {:else}
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            {/if}
                           </svg>
                         </button>
                       </div>
