@@ -23,10 +23,6 @@
     closeDropdown();
   }
   
-  function navigateToPreferences() {
-    goto('/portal/preferences');
-    closeDropdown();
-  }
 </script>
 
 <div class="bg-white rounded-xl shadow-lg border border-gray-200 min-w-80 overflow-hidden">
@@ -71,18 +67,6 @@
       </div>
     </button>
     
-    <button 
-      on:click={navigateToPreferences}
-      class="w-full px-6 py-3 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3"
-    >
-      <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
-      </svg>
-      <div>
-        <div class="font-medium text-gray-900">Preferences</div>
-        <div class="text-sm text-gray-500">Notification settings</div>
-      </div>
-    </button>
     
     <div class="border-t border-gray-200 mt-2 pt-2">
       <button 
