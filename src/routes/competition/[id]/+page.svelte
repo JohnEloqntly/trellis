@@ -752,7 +752,7 @@
                               class="w-full h-full object-cover filter blur-sm brightness-75 contrast-125 saturate-50"
                                 on:error={() => {}}
                               />
-                            <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20 rounded-full"></div>
                             {:else}
                               <div class="w-full h-full bg-gradient-to-br from-primary-blue to-cta-pink flex items-center justify-center">
                                 <span class="text-white font-gt-walsheim-bold text-sm">{anonymizeName(writer.name).split(' ').map(n => n[0]).join('')}</span>

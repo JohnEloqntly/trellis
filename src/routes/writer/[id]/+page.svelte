@@ -48,6 +48,28 @@
     }
     return fullName[0]; // Fallback to just first letter
   }
+
+  // Redact full names from bio content
+  function redactBioContent(bio: string, writerName: string): string {
+    const firstName = writerName.split(' ')[1]; // Extract first name
+    const lastName = writerName.split(' ')[2] || writerName.split(' ')[1]; // Extract last name
+    const anonymized = anonymizeName(writerName);
+    
+    return bio
+      .replace(new RegExp(writerName, 'g'), anonymized)
+      .replace(new RegExp(firstName, 'g'), anonymized.split(' ')[1] || 'X')
+      .replace(new RegExp(lastName, 'g'), '');
+  }
+
+  // Redact testimonial author names
+  function redactTestimonialAuthor(author: string): string {
+    const parts = author.split(', ');
+    const name = parts[0];
+    const title = parts[1] || '';
+    
+    const anonymizedName = anonymizeName(name);
+    return title ? `${anonymizedName}, ${title}` : anonymizedName;
+  }
   
   function openContactModal() {
     showContactModal = true;
@@ -557,7 +579,7 @@ His approach combines technical expertise with commercial understanding, enablin
       <!-- Writer Profile Header -->
       <div class="bg-gray-100 rounded-3xl p-12 mb-8 text-center" in:fade={{ duration: 500, delay: 100 }}>
         <div class="relative inline-block mb-6">
-          <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg mx-auto">
+          <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg mx-auto relative">
             {#if writer.avatar}
               <img 
                 src={writer.avatar} 
@@ -567,7 +589,7 @@ His approach combines technical expertise with commercial understanding, enablin
                   // Handle image load error by hiding image and showing placeholder
                 }}
               />
-              <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20"></div>
+              <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20 rounded-full"></div>
             {:else}
               <div class="w-full h-full bg-gradient-to-br from-primary-blue to-secondary-blue flex items-center justify-center">
                 <span class="text-white font-gt-walsheim-bold text-2xl">{getInitials(writer.name)}</span>
@@ -726,7 +748,7 @@ His approach combines technical expertise with commercial understanding, enablin
           <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8" in:slide={{ duration: 500, delay: 200 }}>
             <h2 class="text-2xl font-gt-walsheim-bold text-gray-900 mb-6">About {anonymizeName(writer.name)}</h2>
             <div class="prose prose-gray max-w-none">
-              {#each writer.fullBio.split('\n\n') as paragraph}
+              {#each redactBioContent(writer.fullBio, writer.name).split('\n\n') as paragraph}
                 <p class="text-gray-700 leading-relaxed mb-4">{paragraph}</p>
               {/each}
             </div>
@@ -779,7 +801,7 @@ His approach combines technical expertise with commercial understanding, enablin
                     "{testimonial.text}"
                   </blockquote>
                   <div class="text-sm">
-                    <p class="font-gt-walsheim-bold text-gray-900">{testimonial.author}</p>
+                    <p class="font-gt-walsheim-bold text-gray-900">{redactTestimonialAuthor(testimonial.author)}</p>
                     <p class="text-gray-600">{testimonial.company}</p>
                   </div>
                 </div>

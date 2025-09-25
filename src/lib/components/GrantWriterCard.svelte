@@ -12,6 +12,17 @@
     imageError = true;
     imageLoaded = true; // Still show fallback
   }
+
+  // Anonymize writer names to show only first letter + qualification
+  function anonymizeName(fullName: string): string {
+    const parts = fullName.split(' ');
+    if (parts.length >= 2) {
+      const title = parts[0]; // Dr., Prof., etc.
+      const firstLetter = parts[1][0]; // First letter of first name
+      return `${title} ${firstLetter}`;
+    }
+    return fullName[0]; // Fallback to just first letter
+  }
 </script>
 
 <div class="grant-writer-card group">
@@ -25,8 +36,8 @@
       
       <img 
         src={grantWriter.avatar} 
-        alt={`${grantWriter.name} profile picture`}
-        class="avatar-image"
+        alt={`${anonymizeName(grantWriter.name)} profile picture`}
+        class="avatar-image filter blur-sm brightness-75 contrast-125 saturate-50"
         class:loaded={imageLoaded}
         class:error={imageError}
         on:load={handleImageLoad}
@@ -34,6 +45,9 @@
         loading="lazy"
         decoding="async"
       />
+      
+      <!-- Privacy overlay -->
+      <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20 rounded-full" class:opacity-100={imageLoaded && !imageError} class:opacity-0={!imageLoaded || imageError}></div>
       
       <div class="experience-badge">
         {grantWriter.yearsExperience}+ years
@@ -43,7 +57,7 @@
   
   <!-- Name -->
   <h3 class="writer-name">
-    {grantWriter.name}
+    {anonymizeName(grantWriter.name)}
   </h3>
   
   <!-- Title -->

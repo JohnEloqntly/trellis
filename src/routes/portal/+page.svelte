@@ -715,17 +715,17 @@
                       </div>
                       <div class="flex flex-col items-end space-y-2">
                         <span class="px-3 py-1.5 rounded-full text-sm font-semibold border {getStatusColor(grant.status)}">
-                          {grant.status.replace('-', ' ')}
-                        </span>
+                        {grant.status.replace('-', ' ')}
+                      </span>
                       </div>
                     </div>
                     <div class="flex space-x-3">
-                      <button 
+                    <button 
                         on:click={() => goto(`/competition/${grant.id}?from=${activeSection}`)}
                         class="flex-1 bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-semibold px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-200"
-                      >
-                        View Details
-                      </button>
+                    >
+                      View Details
+                    </button>
                       <button 
                         on:click={() => toggleSaveCompetition(grant.id)}
                         class="font-semibold px-4 py-2 rounded-xl transition-all duration-200 {competitionSaves[grant.id] ? 'bg-emerald-500 text-white' : 'border border-gray-200 text-gray-700 hover:bg-gray-50'}"
@@ -757,10 +757,10 @@
                   <p class="text-gray-600">You have {displayedWriters.length} saved writer{displayedWriters.length === 1 ? '' : 's'}</p>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {#each displayedWriters as writer}
-                    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6">
-                      <div class="flex items-center space-x-4 mb-4">
+                  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6">
+                    <div class="flex items-center space-x-4 mb-4">
                         <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 relative">
                           {#if writer.avatar}
                             <img 
@@ -769,41 +769,41 @@
                               class="w-full h-full object-cover filter blur-sm brightness-75 contrast-125 saturate-50"
                               on:error={() => {}}
                             />
-                            <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20 rounded-full"></div>
                           {:else}
                             <div class="w-full h-full bg-gradient-to-br from-primary-blue to-cta-pink flex items-center justify-center">
                               <span class="text-white font-gt-walsheim-bold text-lg">{anonymizeName(writer.name).split(' ').map(n => n[0]).join('')}</span>
                             </div>
                           {/if}
-                        </div>
-                        <div class="flex-1">
-                          <h3 class="font-gt-walsheim-bold text-gray-900">{anonymizeName(writer.name)}</h3>
-                          <p class="text-sm text-gray-600">{writer.title}</p>
-                        </div>
                       </div>
-                      <div class="space-y-2 mb-4">
-                        <div class="flex justify-between text-sm">
-                          <span class="text-gray-600">Success Rate</span>
-                          <span class="font-gt-walsheim-bold text-primary-blue">{writer.successRate}%</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                          <span class="text-gray-600">Sector</span>
-                          <span class="text-gray-900">{writer.sector}</span>
-                        </div>
+                      <div class="flex-1">
+                          <h3 class="font-gt-walsheim-bold text-gray-900">{anonymizeName(writer.name)}</h3>
+                        <p class="text-sm text-gray-600">{writer.title}</p>
+                      </div>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Success Rate</span>
+                        <span class="font-gt-walsheim-bold text-primary-blue">{writer.successRate}%</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Sector</span>
+                        <span class="text-gray-900">{writer.sector}</span>
+                      </div>
                         <div class="flex justify-between text-sm">
                           <span class="text-gray-600">Total Funding</span>
                           <span class="text-gray-900">£{writer.totalFunding}</span>
                         </div>
-                      </div>
-                      <div class="flex space-x-3 mt-4">
-                        <button 
+                    </div>
+                    <div class="flex space-x-3 mt-4">
+                      <button 
                           on:click={() => goto(`/writer/${writer.id}?from=${activeSection}`)}
                           class="flex-1 bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-semibold px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-200"
-                        >
-                          View Profile
-                        </button>
-                        <button 
-                          on:click={() => toggleSaveWriter(writer.id)}
+                      >
+                        View Profile
+                      </button>
+                      <button 
+                        on:click={() => toggleSaveWriter(writer.id)}
                           class="font-semibold px-4 py-2 rounded-xl transition-all duration-200 {writerSaves[writer.id] ? 'bg-red-500 text-white hover:bg-red-600' : 'border border-gray-200 text-gray-700 hover:bg-gray-50'}"
                           title={writerSaves[writer.id] ? 'Remove from saved' : 'Save writer'}
                         >
@@ -814,11 +814,11 @@
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                             {/if}
                           </svg>
-                        </button>
-                      </div>
+                      </button>
                     </div>
-                  {/each}
-                </div>
+                  </div>
+                {/each}
+              </div>
               {/if}
 
             {:else if activeSection === 'saved-competitions'}
@@ -846,33 +846,33 @@
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {#each displayedGrants as grant}
-                    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6">
-                      <div class="flex items-start justify-between mb-4">
-                        <div class="flex-1">
-                          <h3 class="text-xl font-gt-walsheim-bold text-gray-900 mb-2">{grant.title}</h3>
-                          <p class="text-gray-600 mb-3">{grant.funder}</p>
+                  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6">
+                    <div class="flex items-start justify-between mb-4">
+                      <div class="flex-1">
+                        <h3 class="text-xl font-gt-walsheim-bold text-gray-900 mb-2">{grant.title}</h3>
+                        <p class="text-gray-600 mb-3">{grant.funder}</p>
                           <div class="flex items-center space-x-4 text-sm mb-3">
                             <span class="text-gray-500">{grant.amount}</span>
-                            <span class="text-gray-500">•</span>
-                            <span class="text-gray-500">Deadline: {formatDate(grant.deadline)}</span>
+                          <span class="text-gray-500">•</span>
+                          <span class="text-gray-500">Deadline: {formatDate(grant.deadline)}</span>
                           </div>
                           <p class="text-gray-700 text-sm line-clamp-2 mb-3">{grant.description}</p>
                         </div>
                         <span class="px-3 py-1.5 rounded-full text-sm font-semibold border {getStatusColor(grant.status)}">
-                          {grant.status.replace('-', ' ')}
-                        </span>
-                      </div>
+                        {grant.status.replace('-', ' ')}
+                      </span>
+                    </div>
                       <div class="flex space-x-3">
-                        <button 
+                    <button 
                           on:click={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
                             goto(`/competition/${grant.id}?from=${activeSection}`);
                           }}
                           class="flex-1 bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-semibold px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-200"
-                        >
-                          View Details
-                        </button>
+                    >
+                      View Details
+                    </button>
                         <button 
                           on:click={() => toggleSaveCompetition(grant.id)}
                           class="font-semibold px-4 py-2 rounded-xl transition-all duration-200 bg-red-500 text-white hover:bg-red-600"
@@ -881,7 +881,7 @@
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                           </svg>
-                        </button>
+                          </button>
                       </div>
                     </div>
                   {/each}
