@@ -3,37 +3,61 @@ import { browser } from '$app/environment';
 
 // Initialize projects with default project
 function createProjectsStore() {
-  // Default project data
-  const defaultProject = {
-    id: 'default-project',
-    name: 'AI-Powered Analytics Platform',
-    description: 'Machine learning platform for real-time data analytics',
-    sector: 'Technology',
-    technology: 'AI/ML',
-    trl: 5,
-    problemStatement: 'Data analytics is too slow and reactive',
-    solutionApproach: 'Real-time ML processing with predictive insights',
-    createdAt: new Date().toISOString()
-  };
+  // Example projects with different sectors/technologies for demo
+  const exampleProjects = [
+    {
+      id: 'project-agtech',
+      name: 'AI for Crop Yield Optimisation',
+      description: 'Machine learning platform for precision agriculture and crop monitoring',
+      sector: 'AgTech',
+      technology: 'AI/ML',
+      trl: 6,
+      problemStatement: 'Farmers lack real-time insights for optimal crop management',
+      solutionApproach: 'AI-powered sensors and predictive analytics for precision farming',
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: 'project-healthcare',
+      name: 'Digital Health Monitoring System',
+      description: 'IoT-based remote patient monitoring with predictive health analytics',
+      sector: 'Healthcare',
+      technology: 'Digital Health & MedTech',
+      trl: 4,
+      problemStatement: 'Remote patient monitoring is inefficient and reactive',
+      solutionApproach: 'Continuous monitoring with AI-driven early warning systems',
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: 'project-cleantech',
+      name: 'Smart Grid Energy Storage',
+      description: 'Advanced battery management system for renewable energy storage',
+      sector: 'Energy & Environment',
+      technology: 'Clean Energy & Sustainability',
+      trl: 7,
+      problemStatement: 'Renewable energy storage is inefficient and costly',
+      solutionApproach: 'Smart algorithms for optimal energy storage and distribution',
+      createdAt: new Date().toISOString()
+    }
+  ];
 
   // Load from localStorage or use defaults
   const getInitialProjects = () => {
-    if (!browser) return [defaultProject];
+    if (!browser) return exampleProjects;
     try {
       const stored = localStorage.getItem('trellisProjects');
-      return stored ? JSON.parse(stored) : [defaultProject];
+      return stored ? JSON.parse(stored) : exampleProjects;
     } catch {
-      return [defaultProject];
+      return exampleProjects;
     }
   };
 
   const getInitialActiveId = () => {
-    if (!browser) return defaultProject.id;
+    if (!browser) return exampleProjects[0].id;
     try {
       const stored = localStorage.getItem('trellisActiveProjectId');
-      return stored || defaultProject.id;
+      return stored || exampleProjects[0].id;
     } catch {
-      return defaultProject.id;
+      return exampleProjects[0].id;
     }
   };
 

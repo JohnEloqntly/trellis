@@ -4,14 +4,52 @@ import { projectsStore } from './projects.js';
 
 // Project-scoped saves store
 function createProjectSavesStore() {
-  // Initialize with empty saves structure
+  // Initialize with example saves for demo
   const getInitialSaves = () => {
-    if (!browser) return { competitions: {}, writers: {} };
+    if (!browser) return {
+      competitions: {
+        'project-agtech': [1, 2], // Agriculture grants
+        'project-healthcare': [3, 4], // Healthcare grants
+        'project-cleantech': [5, 6] // Clean energy grants
+      },
+      writers: {
+        'project-agtech': [1, 3], // Writers specializing in AgTech
+        'project-healthcare': [2, 4], // Writers specializing in Healthcare
+        'project-cleantech': [1, 5] // Writers specializing in Clean Energy
+      }
+    };
     try {
       const stored = localStorage.getItem('trellisProjectSaves');
-      return stored ? JSON.parse(stored) : { competitions: {}, writers: {} };
+      if (stored) {
+        return JSON.parse(stored);
+      } else {
+        // Return demo data if no stored data
+        return {
+          competitions: {
+            'project-agtech': [1, 2],
+            'project-healthcare': [3, 4], 
+            'project-cleantech': [5, 6]
+          },
+          writers: {
+            'project-agtech': [1, 3],
+            'project-healthcare': [2, 4],
+            'project-cleantech': [1, 5]
+          }
+        };
+      }
     } catch {
-      return { competitions: {}, writers: {} };
+      return {
+        competitions: {
+          'project-agtech': [1, 2],
+          'project-healthcare': [3, 4],
+          'project-cleantech': [5, 6]
+        },
+        writers: {
+          'project-agtech': [1, 3],
+          'project-healthcare': [2, 4],
+          'project-cleantech': [1, 5]
+        }
+      };
     }
   };
 

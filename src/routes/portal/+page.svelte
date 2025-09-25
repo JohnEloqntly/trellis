@@ -24,7 +24,25 @@
 
   // Filter grants based on active project
   $: projectMatches = currentProject ? allGrants.filter(grant => {
-    // Match by sector, technology, or general relevance
+    // Project-specific matching logic
+    if (currentProject.id === 'project-agtech') {
+      // AgTech project - focus on agricultural and environmental grants
+      return ['Agriculture', 'Environment', 'Technology', 'Research'].some(keyword => 
+        grant.title.includes(keyword) || grant.description.includes(keyword) || grant.sector === 'Research'
+      );
+    } else if (currentProject.id === 'project-healthcare') {
+      // Healthcare project - focus on health and medical grants
+      return ['Health', 'Medical', 'Innovation', 'Digital'].some(keyword => 
+        grant.title.includes(keyword) || grant.description.includes(keyword) || grant.funder.includes('NIHR')
+      );
+    } else if (currentProject.id === 'project-cleantech') {
+      // Clean tech project - focus on energy and sustainability grants
+      return ['Energy', 'Clean', 'Environment', 'Sustainable'].some(keyword => 
+        grant.title.includes(keyword) || grant.description.includes(keyword) || grant.funder.includes('Energy')
+      );
+    }
+    
+    // Default matching for custom projects
     const sectorMatch = grant.sector === currentProject.sector;
     const technologyMatch = grant.tags?.some(tag => 
       tag.toLowerCase().includes(currentProject.technology.toLowerCase()) ||
@@ -37,14 +55,96 @@
   
   // Expanded grant data - significantly more competitions
   const allGrants = [
+    // AgTech-focused grants
     {
       id: 1,
+      title: 'Sustainable Agriculture Innovation Fund',
+      funder: 'Defra',
+      amount: '£50k - £500k',
+      deadline: '2024-04-15',
+      status: 'open',
+      matchScore: 94,
+      description: 'Supporting innovative solutions for sustainable farming and agricultural Technology.',
+      sector: 'Agriculture',
+      eligibility: ['UK-based SMEs', 'Research organizations', 'Farming cooperatives'],
+      tags: ['Agriculture', 'Sustainability', 'Innovation']
+    },
+    {
+      id: 2,
+      title: 'Smart Farming Technology Research',
+      funder: 'BBSRC',
+      amount: '£100k - £1M',
+      deadline: '2024-05-20',
+      status: 'open',
+      matchScore: 91,
+      description: 'Advanced Technology solutions for precision agriculture and crop monitoring.',
+      sector: 'Research',
+      eligibility: ['Universities', 'AgTech companies', 'Research partnerships'],
+      tags: ['Agriculture', 'Technology', 'Research']
+    },
+    // Healthcare-focused grants
+    {
+      id: 3,
+      title: 'NIHR Digital Health Innovation',
+      funder: 'NIHR',
+      amount: '£75k - £750k',
+      deadline: '2024-03-30',
+      status: 'open',
+      matchScore: 96,
+      description: 'Digital Health solutions improving patient outcomes and Healthcare delivery.',
+      sector: 'Healthcare',
+      eligibility: ['Healthcare organizations', 'Medical device companies', 'Digital health startups'],
+      tags: ['Digital', 'Health', 'Medical', 'Innovation']
+    },
+    {
+      id: 4,
+      title: 'Medical Innovation Accelerator',
+      funder: 'Wellcome Trust',
+      amount: '£25k - £250k',
+      deadline: '2024-06-10',
+      status: 'open',
+      matchScore: 89,
+      description: 'Accelerating Medical innovations from lab to market for improved Healthcare.',
+      sector: 'Healthcare',
+      eligibility: ['Medical researchers', 'Healthcare SMEs', 'Academic institutions'],
+      tags: ['Medical', 'Innovation', 'Healthcare']
+    },
+    // Clean Energy-focused grants
+    {
+      id: 5,
+      title: 'Clean Energy Innovation Fund',
+      funder: 'Department for Energy Security',
+      amount: '£200k - £2M',
+      deadline: '2024-04-25',
+      status: 'open',
+      matchScore: 93,
+      description: 'Clean Energy solutions contributing to net zero and sustainable development.',
+      sector: 'Energy',
+      eligibility: ['Clean tech companies', 'Energy researchers', 'Sustainable innovation teams'],
+      tags: ['Clean', 'Energy', 'Sustainable', 'Environment']
+    },
+    {
+      id: 6,
+      title: 'Net Zero Technology Fund',
+      funder: 'UKRI',
+      amount: '£150k - £1.5M',
+      deadline: '2024-07-15',
+      status: 'open',
+      matchScore: 88,
+      description: 'Advanced Energy storage and grid management technologies for carbon neutrality.',
+      sector: 'Environment',
+      eligibility: ['Energy companies', 'Environmental tech SMEs', 'Research consortiums'],
+      tags: ['Energy', 'Environment', 'Technology', 'Net Zero']
+    },
+    // General innovation grants
+    {
+      id: 7,
       title: 'Innovate UK Smart Grants Round X',
       funder: 'Innovate UK',
       amount: '£100k - £2M',
       deadline: '2024-03-15',
       status: 'open',
-      matchScore: 92,
+      matchScore: 85,
       description: 'Game-changing and commercially viable R&D innovations that can significantly impact the UK economy.',
       sector: 'Technology',
       eligibility: ['UK-based SMEs', 'Research organizations', 'Collaborative projects'],
@@ -522,23 +622,6 @@
           <!-- Content -->
           <div class="space-y-6" in:fade={{ duration: 300 }}>
             {#if activeSection === 'matches'}
-              <!-- Project Context Bar -->
-              {#if currentProject}
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6" in:fade={{ duration: 400 }}>
-                  <div class="flex items-start justify-between">
-                    <div>
-                      <h3 class="text-xl font-gt-walsheim-bold text-gray-900 mb-2">{currentProject.name}</h3>
-                      <p class="text-gray-600 mb-3">{currentProject.description}</p>
-                      <div class="flex items-center space-x-4 text-sm text-gray-500">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-lg">{currentProject.sector}</span>
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-lg">{currentProject.technology}</span>
-                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-lg">TRL {currentProject.trl}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              {/if}
-
               <!-- My Matches -->
               <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 {#each projectMatches as grant}
