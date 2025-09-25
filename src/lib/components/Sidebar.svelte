@@ -42,34 +42,35 @@
 </script>
 
 <div class="bg-white h-full border-r border-gray-200 shadow-sm transition-all duration-300 relative z-30" class:w-20={!expanded} class:w-80={expanded}>
-  <div class="p-4">
-    <!-- Logo and Toggle -->
-    <div class="flex items-center justify-between mb-8 relative">
-      <!-- Trellis Logo -->
-      <div class="flex items-center">
-        {#if expanded}
-          <img src="/favicon.png" alt="Trellis" class="h-8 w-auto" />
-        {:else}
-          <img src="/favicon.png" alt="Trellis" class="h-8 w-8 object-contain" />
-        {/if}
-      </div>
-      
-      <!-- Toggle Button with higher z-index to sit on top of app bar -->
-      <button 
-        on:click={toggleSidebar}
-        class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors duration-200 relative z-40 bg-white border border-gray-200"
-        title={expanded ? 'Collapse sidebar' : 'Expand sidebar'}
-      >
-        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          {#if expanded}
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
-          {:else}
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
-          {/if}
-        </svg>
-      </button>
+  <!-- Top Header Area - Aligned with TopAppBar -->
+  <div class="h-16 flex items-center justify-between px-4 bg-white relative">
+    <!-- Trellis Logo - Top Left Position -->
+    <div class="flex items-center">
+      {#if expanded}
+        <img src="/favicon.png" alt="Trellis" class="h-8 w-auto" />
+      {:else}
+        <img src="/favicon.png" alt="Trellis" class="h-8 w-8 object-contain" />
+      {/if}
     </div>
     
+    <!-- Toggle Button - Top Right of Sidebar -->
+    <button 
+      on:click={toggleSidebar}
+      class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors duration-200 relative z-40 bg-white border border-gray-200"
+      title={expanded ? 'Collapse sidebar' : 'Expand sidebar'}
+    >
+      <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {#if expanded}
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+        {:else}
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+        {/if}
+      </svg>
+    </button>
+  </div>
+
+  <!-- Navigation Area -->
+  <div class="px-4">
     <!-- Navigation -->
     <nav class="space-y-2">
       {#each sections as section}
