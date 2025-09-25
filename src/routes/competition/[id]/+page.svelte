@@ -142,12 +142,12 @@
         'Final funding decision'
       ],
       scoringCriteria: [
-        { name: 'Innovation', score: scores[0], maxScore: 100, description: 'Technical novelty and advancement' },
-        { name: 'Market Potential', score: scores[1], maxScore: 100, description: 'Commercial opportunity and demand' },
-        { name: 'Team Capability', score: scores[2], maxScore: 100, description: 'Skills, experience and track record' },
-        { name: 'Feasibility', score: scores[3], maxScore: 100, description: 'Technical and commercial viability' },
-        { name: 'Impact', score: scores[4], maxScore: 100, description: 'Economic and societal benefits' },
-        { name: 'Execution', score: scores[0] + 5, maxScore: 100, description: 'Project delivery capability' }
+        { name: 'Eligibility', score: scores[0], maxScore: 100, description: 'Meeting programme requirements and criteria' },
+        { name: 'Innovation Strength', score: scores[1], maxScore: 100, description: 'Technical novelty and competitive advantage' },
+        { name: 'Market Traction', score: scores[2], maxScore: 100, description: 'Customer validation and market demand' },
+        { name: 'Team Capacity', score: scores[3], maxScore: 100, description: 'Skills, experience and delivery capability' },
+        { name: 'Project Feasibility', score: scores[4], maxScore: 100, description: 'Technical and commercial viability' },
+        { name: 'Impact', score: scores[0] + 5, maxScore: 100, description: 'Economic, social and environmental benefits' }
       ],
       relatedCompetitions: portalCompetitions
         .filter(c => c.id !== comp.id && (c.sector === comp.sector || Math.random() > 0.5))
