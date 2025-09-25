@@ -10,6 +10,9 @@
     currentStep, 
     technologyOptions, 
     sectorOptions, 
+    countryOptions,
+    marketSizeOptions,
+    validationOptions,
     trlDescriptions 
   } from '$lib/stores/onboarding.js';
   
@@ -25,12 +28,15 @@
     companyAge: '',
     website: '',
     sector: '',
+    registeredCountry: '',
     previousGrantFunding: '',
     projectName: '',
     problemStatement: '',
     solutionApproach: '',
     technologyType: '',
     crossSectors: '',
+    marketSize: '',
+    commercialValidation: '',
     innovationMaturity: 5,
     elevatorPitch: ''
   };
@@ -162,9 +168,22 @@
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
              </svg>`
     },
-    // Project section intro
     {
       id: 8,
+      title: "Where is your company registered?",
+      subtitle: "Some funding programmes have specific geographic requirements",
+      field: 'registeredCountry',
+      type: 'select',
+      placeholder: 'Select country',
+      options: countryOptions,
+      autofocus: true,
+      icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+             </svg>`
+    },
+    // Project section intro
+    {
+      id: 9,
       title: "Now, tell us about your project",
       subtitle: "Grant funding is project-based. These details help match you with relevant opportunities",
       field: 'project_intro',
@@ -174,7 +193,7 @@
              </svg>`
     },
     {
-      id: 9,
+      id: 10,
       title: "What is the name of your project?",
       subtitle: "We’ll match funding to the specific project you’re working on",
       field: 'projectName',
@@ -245,6 +264,32 @@
     },
     {
       id: 14,
+      title: "What size is the market you're targeting?",
+      subtitle: "Market size helps us understand the scale and type of funding opportunities",
+      field: 'marketSize',
+      type: 'select',
+      placeholder: 'Select market size',
+      options: marketSizeOptions,
+      autofocus: true,
+      icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
+             </svg>`
+    },
+    {
+      id: 15,
+      title: "How much commercial validation do you have?",
+      subtitle: "Understanding your validation level helps match you to appropriate funding stages",
+      field: 'commercialValidation',
+      type: 'select',
+      placeholder: 'Select validation level',
+      options: validationOptions,
+      autofocus: true,
+      icon: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+             </svg>`
+    },
+    {
+      id: 16,
       title: "",
       subtitle: "",
       field: 'trlExplainer',
@@ -258,7 +303,7 @@
              </svg>`
     },
     {
-      id: 15,
+      id: 17,
       title: "What is your TRL level?",
       subtitle: "How developed is your technology? (Based on NASA TRL scale)",
       field: 'innovationMaturity',
@@ -333,12 +378,15 @@
       else if (fieldName === 'companyAge') data.companyAge = processedValue;
       else if (fieldName === 'website') data.website = processedValue;
       else if (fieldName === 'sector') data.sector = processedValue;
+      else if (fieldName === 'registeredCountry') data.registeredCountry = processedValue;
       else if (fieldName === 'previousGrantFunding') data.previousGrantFunding = processedValue;
       else if (fieldName === 'projectName') data.projectName = processedValue;
       else if (fieldName === 'problemStatement') data.problemStatement = processedValue;
       else if (fieldName === 'solutionApproach') data.solutionApproach = processedValue;
       else if (fieldName === 'technologyType') data.technologyType = processedValue;
       else if (fieldName === 'crossSectors') data.crossSectors = processedValue;
+      else if (fieldName === 'marketSize') data.marketSize = processedValue;
+      else if (fieldName === 'commercialValidation') data.commercialValidation = processedValue;
       else if (fieldName === 'innovationMaturity') data.innovationMaturity = processedValue;
       else if (fieldName === 'elevatorPitch') data.elevatorPitch = processedValue;
       
@@ -684,6 +732,17 @@
               on:input={handleFieldInput}
               on:enter={handleEnter}
             />
+          {:else if currentStepData.field === 'registeredCountry'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.registeredCountry}
+              placeholder={currentStepData.placeholder}
+              options={currentStepData.options || []}
+              autofocus={currentStepData.autofocus}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
           {:else if currentStepData.field === 'projectName'}
             <StepField
               type={currentStepData.type}
@@ -735,6 +794,28 @@
               bind:value={data.crossSectors}
               placeholder={currentStepData.placeholder}
               multiple={true}
+              options={currentStepData.options || []}
+              autofocus={currentStepData.autofocus}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
+          {:else if currentStepData.field === 'marketSize'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.marketSize}
+              placeholder={currentStepData.placeholder}
+              options={currentStepData.options || []}
+              autofocus={currentStepData.autofocus}
+              on:input={handleFieldInput}
+              on:enter={handleEnter}
+            />
+          {:else if currentStepData.field === 'commercialValidation'}
+            <StepField
+              type={currentStepData.type}
+              label={currentStepData.title}
+              bind:value={data.commercialValidation}
+              placeholder={currentStepData.placeholder}
               options={currentStepData.options || []}
               autofocus={currentStepData.autofocus}
               on:input={handleFieldInput}

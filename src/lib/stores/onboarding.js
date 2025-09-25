@@ -14,6 +14,7 @@ const initialData = {
   companyAge: '',
   website: '',
   sector: '',
+  registeredCountry: '',
 
   // Project information
   projectName: '',
@@ -21,6 +22,8 @@ const initialData = {
   solutionApproach: '',
   technologyType: '',
   crossSectors: '',
+  marketSize: '',
+  commercialValidation: '',
   innovationMaturity: 5,
   previousGrantFunding: '',
   
@@ -116,6 +119,49 @@ export const sectorOptions = [
   'Defense & Security',
   'Aerospace',
   'Other'
+];
+
+// Country options for company registration
+export const countryOptions = [
+  'United Kingdom',
+  'United States',
+  'Germany',
+  'France',
+  'Netherlands',
+  'Ireland',
+  'Switzerland',
+  'Canada',
+  'Australia',
+  'Singapore',
+  'Denmark',
+  'Sweden',
+  'Norway',
+  'Finland',
+  'Belgium',
+  'Austria',
+  'Luxembourg',
+  'Other'
+];
+
+// Market size options
+export const marketSizeOptions = [
+  'Local (City/Region)',
+  'National (Single Country)',
+  'Regional (Multi-Country)',
+  'Global Market',
+  'Niche/Specialized Market',
+  'Not Sure Yet'
+];
+
+// Commercial validation options
+export const validationOptions = [
+  'No validation yet - just an idea',
+  'Some initial research/surveys',
+  'Prototype tested with users',
+  'Pilot customers or partners',
+  'Paying customers',
+  'Market traction with revenue',
+  'Proven business model'
 ];
 
 // NASA TRL (Technology Readiness Level) descriptions
