@@ -7,6 +7,17 @@
   import TopAppBar from '$lib/components/TopAppBar.svelte';
   import GrantWriterCard from '$lib/components/GrantWriterCard.svelte';
   import { grantWriters } from '$lib/data/grant-writers.js';
+
+  // Anonymize writer names to show only first letter + qualification
+  function anonymizeName(fullName: string): string {
+    const parts = fullName.split(' ');
+    if (parts.length >= 2) {
+      const title = parts[0]; // Dr., Prof., etc.
+      const firstLetter = parts[1][0]; // First letter of first name
+      return `${title} ${firstLetter}`;
+    }
+    return fullName[0]; // Fallback to just first letter
+  }
   
   let mounted = false;
   let competitionId: string;
@@ -733,22 +744,23 @@
                         in:slide={{ duration: 300, delay: index * 100 }}
                       >
                         <div class="flex items-center space-x-3 mb-3">
-                          <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-200 flex-shrink-0">
+                          <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-200 flex-shrink-0 relative">
                             {#if writer.avatar && !writer.avatar.includes('placeholder')}
                               <img 
                                 src={writer.avatar} 
-                                alt={writer.name}
-                                class="w-full h-full object-cover"
+                              alt={anonymizeName(writer.name)}
+                              class="w-full h-full object-cover filter blur-sm brightness-75 contrast-125 saturate-50"
                                 on:error={() => {}}
                               />
+                            <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20"></div>
                             {:else}
                               <div class="w-full h-full bg-gradient-to-br from-primary-blue to-cta-pink flex items-center justify-center">
-                                <span class="text-white font-gt-walsheim-bold text-sm">{writer.name.split(' ').map(n => n[0]).join('')}</span>
+                                <span class="text-white font-gt-walsheim-bold text-sm">{anonymizeName(writer.name).split(' ').map(n => n[0]).join('')}</span>
                               </div>
                             {/if}
                           </div>
                           <div class="flex-1">
-                            <h4 class="font-gt-walsheim-bold text-gray-900">{writer.name}</h4>
+                            <h4 class="font-gt-walsheim-bold text-gray-900">{anonymizeName(writer.name)}</h4>
                             <p class="text-sm text-gray-600">{writer.title}</p>
                           </div>
                         </div>

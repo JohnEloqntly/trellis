@@ -22,6 +22,17 @@
     activeSection = section;
   }
 
+  // Anonymize writer names to show only first letter + qualification
+  function anonymizeName(fullName: string): string {
+    const parts = fullName.split(' ');
+    if (parts.length >= 2) {
+      const title = parts[0]; // Dr., Prof., etc.
+      const firstLetter = parts[1][0]; // First letter of first name
+      return `${title} ${firstLetter}`;
+    }
+    return fullName[0]; // Fallback to just first letter
+  }
+
   // Filter grants based on active project
   $: projectMatches = currentProject ? allGrants.filter(grant => {
     // Project-specific matching logic
@@ -750,11 +761,23 @@
                   {#each displayedWriters as writer}
                     <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6">
                       <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-16 h-16 bg-gradient-to-br from-primary-blue to-cta-pink rounded-full flex items-center justify-center">
-                          <span class="text-white font-gt-walsheim-bold text-lg">{writer.name.split(' ').map(n => n[0]).join('')}</span>
+                        <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 relative">
+                          {#if writer.avatar}
+                            <img 
+                              src={writer.avatar} 
+                              alt={anonymizeName(writer.name)}
+                              class="w-full h-full object-cover filter blur-sm brightness-75 contrast-125 saturate-50"
+                              on:error={() => {}}
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20"></div>
+                          {:else}
+                            <div class="w-full h-full bg-gradient-to-br from-primary-blue to-cta-pink flex items-center justify-center">
+                              <span class="text-white font-gt-walsheim-bold text-lg">{anonymizeName(writer.name).split(' ').map(n => n[0]).join('')}</span>
+                            </div>
+                          {/if}
                         </div>
                         <div class="flex-1">
-                          <h3 class="font-gt-walsheim-bold text-gray-900">{writer.name}</h3>
+                          <h3 class="font-gt-walsheim-bold text-gray-900">{anonymizeName(writer.name)}</h3>
                           <p class="text-sm text-gray-600">{writer.title}</p>
                         </div>
                       </div>

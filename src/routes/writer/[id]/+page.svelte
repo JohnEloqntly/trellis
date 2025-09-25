@@ -37,6 +37,17 @@
   function getInitials(name: string): string {
     return name.split(' ').map(n => n[0]).join('');
   }
+
+  // Anonymize writer names to show only first letter + qualification
+  function anonymizeName(fullName: string): string {
+    const parts = fullName.split(' ');
+    if (parts.length >= 2) {
+      const title = parts[0]; // Dr., Prof., etc.
+      const firstLetter = parts[1][0]; // First letter of first name
+      return `${title} ${firstLetter}`;
+    }
+    return fullName[0]; // Fallback to just first letter
+  }
   
   function openContactModal() {
     showContactModal = true;
@@ -550,12 +561,13 @@ His approach combines technical expertise with commercial understanding, enablin
             {#if writer.avatar}
               <img 
                 src={writer.avatar} 
-                alt={writer.name}
-                class="w-full h-full object-cover"
+                alt={anonymizeName(writer.name)}
+                class="w-full h-full object-cover filter blur-sm brightness-75 contrast-125 saturate-50"
                 on:error={() => {
                   // Handle image load error by hiding image and showing placeholder
                 }}
               />
+              <div class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-cta-pink/20"></div>
             {:else}
               <div class="w-full h-full bg-gradient-to-br from-primary-blue to-secondary-blue flex items-center justify-center">
                 <span class="text-white font-gt-walsheim-bold text-2xl">{getInitials(writer.name)}</span>
@@ -564,7 +576,7 @@ His approach combines technical expertise with commercial understanding, enablin
           </div>
           </div>
           
-        <h1 class="text-4xl font-gt-walsheim-bold text-gray-900 mb-2">{writer.name}</h1>
+        <h1 class="text-4xl font-gt-walsheim-bold text-gray-900 mb-2">{anonymizeName(writer.name)}</h1>
         <p class="text-xl text-gray-500">{writer.title}</p>
               </div>
               
@@ -598,7 +610,7 @@ His approach combines technical expertise with commercial understanding, enablin
             </div>
             <div>
               <p class="text-sm font-medium text-emerald-900">Writer saved!</p>
-              <p class="text-sm text-emerald-700">You can find {writer.name} in your saved writers in the portal.</p>
+              <p class="text-sm text-emerald-700">You can find {anonymizeName(writer.name)} in your saved writers in the portal.</p>
             </div>
           </div>
         </div>
@@ -667,7 +679,7 @@ His approach combines technical expertise with commercial understanding, enablin
           <h2 class="text-2xl font-gt-walsheim-bold text-gray-900">Supported Competitions</h2>
         </div>
         
-        <p class="text-gray-600 mb-8">Grant competitions {writer.name} has expertise in</p>
+        <p class="text-gray-600 mb-8">Grant competitions {anonymizeName(writer.name)} has expertise in</p>
         
         <div class="grid grid-cols-2 gap-6">
           <!-- IUK Loan -->
@@ -712,7 +724,7 @@ His approach combines technical expertise with commercial understanding, enablin
           
           <!-- Full Bio -->
           <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8" in:slide={{ duration: 500, delay: 200 }}>
-            <h2 class="text-2xl font-gt-walsheim-bold text-gray-900 mb-6">About {writer.name.split(' ')[1]}</h2>
+            <h2 class="text-2xl font-gt-walsheim-bold text-gray-900 mb-6">About {anonymizeName(writer.name)}</h2>
             <div class="prose prose-gray max-w-none">
               {#each writer.fullBio.split('\n\n') as paragraph}
                 <p class="text-gray-700 leading-relaxed mb-4">{paragraph}</p>
@@ -800,7 +812,7 @@ His approach combines technical expertise with commercial understanding, enablin
         <!-- Contact Form -->
         <div class="p-8">
           <div class="flex items-center justify-between mb-6">
-            <h3 class="text-2xl font-gt-walsheim-bold text-gray-900">Contact {writer.name}</h3>
+            <h3 class="text-2xl font-gt-walsheim-bold text-gray-900">Contact {anonymizeName(writer.name)}</h3>
             <button 
               on:click={closeContactModal}
               class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors duration-200"
@@ -904,13 +916,13 @@ His approach combines technical expertise with commercial understanding, enablin
           
           <h3 class="text-2xl font-gt-walsheim-bold text-gray-900 mb-3">Message Sent!</h3>
           <p class="text-gray-600 mb-6">
-            Thank you for reaching out. {writer.name} will get back to you within 24 hours.
+            Thank you for reaching out. {anonymizeName(writer.name)} will get back to you within 24 hours.
           </p>
           
           <div class="bg-gray-50 rounded-xl p-4 mb-6">
             <h4 class="text-sm font-medium text-gray-900 mb-2">What happens next?</h4>
             <ul class="text-sm text-gray-600 space-y-1">
-              <li>• {writer.name} will review your project details</li>
+              <li>• {anonymizeName(writer.name)} will review your project details</li>
               <li>• You'll receive a personalized proposal</li>
               <li>• Schedule a consultation call if interested</li>
             </ul>
