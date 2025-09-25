@@ -487,5 +487,7 @@
         {/if}
       {/if}
         </div>
+      </div>
+    </div>
   </div>
 </div> 
