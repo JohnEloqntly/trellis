@@ -143,14 +143,15 @@ export const countryOptions = [
   'Other'
 ];
 
-// Market size options
+// Market size options (customer scale)
 export const marketSizeOptions = [
-  'Local (City/Region)',
-  'National (Single Country)',
-  'Regional (Multi-Country)',
-  'Global Market',
-  'Niche/Specialized Market',
-  'Not Sure Yet'
+  'Tens of customers',
+  'Hundreds of customers',
+  'Thousands of customers',
+  'Tens of thousands of customers',
+  'Hundreds of thousands of customers',
+  'Millions of customers',
+  'Not sure yet'
 ];
 
 // Commercial validation options

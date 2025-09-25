@@ -319,7 +319,7 @@
   ];
   
   $: currentStepData = steps.find(step => step.id === currentStepValue);
-  $: isLastStep = currentStepValue === steps.length;
+  $: isLastStep = currentStepValue === 17; // Last step ID is 17 (TRL selection)
   $: isFirstStep = currentStepValue === 1;
   $: canProceed = validateCurrentStep();
   $: currentTrlDescription = getTrlDescription(data.innovationMaturity);
