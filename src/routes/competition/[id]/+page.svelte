@@ -788,18 +788,23 @@
                 <div class="space-y-3">
                   {#each competition.relatedCompetitions as related, index}
                     <div 
-                      class="p-4 border border-gray-200 rounded-xl hover:shadow-md transition-all duration-300 cursor-pointer"
+                      class="p-6 border border-gray-200 rounded-xl hover:shadow-md transition-all duration-300 cursor-pointer"
                       on:click={() => goto(`/competition/${related.id}`)}
                       in:slide={{ duration: 300, delay: index * 100 }}
                     >
-                      <div class="flex items-center justify-between mb-2">
-                        <h4 class="font-gt-walsheim-bold text-gray-900 text-sm">{related.title}</h4>
-                        <span class="text-xs font-medium px-2 py-1 bg-indigo-50 text-indigo-600 rounded-full">
-                          {related.matchScore}% match
-                        </span>
+                      <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1 pr-4">
+                          <h4 class="font-gt-walsheim-bold text-gray-900 text-sm leading-tight mb-2">{related.title}</h4>
+                          <p class="text-xs text-gray-600 mb-1">{related.funder}</p>
+                          <p class="text-xs font-medium text-primary-blue">{related.amount}</p>
+                        </div>
+                        <div class="flex-shrink-0">
+                          <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-3 py-2 rounded-lg text-center min-w-[4rem]">
+                            <div class="text-sm font-gt-walsheim-bold">{related.matchScore}%</div>
+                            <div class="text-xs opacity-90">match</div>
+                          </div>
+                        </div>
                       </div>
-                      <p class="text-xs text-gray-600 mb-1">{related.funder}</p>
-                      <p class="text-xs font-medium text-primary-blue">{related.amount}</p>
                     </div>
                   {/each}
                 </div>
