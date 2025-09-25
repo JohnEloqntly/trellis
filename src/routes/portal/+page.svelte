@@ -4,6 +4,7 @@
   import { page } from '$app/stores';
   import { fade, slide } from 'svelte/transition';
   import Sidebar from '$lib/components/Sidebar.svelte';
+  import TopAppBar from '$lib/components/TopAppBar.svelte';
   
   let mounted = false;
   let activeSection = 'matches';
@@ -482,13 +483,16 @@
 
 <div class="min-h-screen bg-gray-50">
   {#if mounted}
-    <div class="flex h-screen">
+    <!-- Top App Bar (behind sidebar) -->
+    <TopAppBar />
+    
+    <div class="flex h-screen pt-16">
       <!-- Sidebar Component -->
-              <Sidebar 
-          bind:expanded={sidebarExpanded} 
-          {activeSection} 
-          onSectionChange={handleSectionChange}
-        />
+      <Sidebar 
+        bind:expanded={sidebarExpanded} 
+        {activeSection} 
+        onSectionChange={handleSectionChange}
+      />
 
       <!-- Main Content -->
       <div class="flex-1 overflow-auto">
@@ -502,7 +506,6 @@
               {:else if activeSection === 'competitions'}All Competitions
               {:else if activeSection === 'saved-writers'}Saved Writers
               {:else if activeSection === 'saved-competitions'}Saved Competitions
-              {:else}Account
               {/if}
             </h2>
             <p class="text-gray-600">
@@ -510,7 +513,6 @@
               {:else if activeSection === 'competitions'}Browse all available funding opportunities
               {:else if activeSection === 'saved-writers'}Your favorite grant writers
               {:else if activeSection === 'saved-competitions'}Competitions you've saved for later
-              {:else}Manage your account settings
               {/if}
             </p>
           </div>
@@ -754,204 +756,6 @@
                 </div>
               {/if}
 
-            {:else if activeSection === 'account'}
-              <!-- Account Management -->
-              <div class="space-y-8">
-                
-                <!-- Profile Settings -->
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-                  <h3 class="text-2xl font-gt-walsheim-bold text-gray-900 mb-6">Profile Settings</h3>
-                  
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label for="fullName" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                      <input 
-                        id="fullName"
-                        type="text" 
-                        value="John Smith"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                      <input 
-                        id="email"
-                        type="email" 
-                        value="john.smith@company.com"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label for="company" class="block text-sm font-medium text-gray-700 mb-2">Company</label>
-                      <input 
-                        id="company"
-                        type="text" 
-                        value="Tech Innovations Ltd"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label for="sector" class="block text-sm font-medium text-gray-700 mb-2">Sector</label>
-                      <select id="sector" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200">
-                        <option value="Technology">Technology</option>
-                        <option value="Healthcare">Healthcare</option>
-                        <option value="Manufacturing">Manufacturing</option>
-                        <option value="Financial Services">Financial Services</option>
-                        <option value="Defense & Security">Defense & Security</option>
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div class="mt-6">
-                    <button class="bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-gt-walsheim-bold px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300">
-                      Update Profile
-                    </button>
-                  </div>
-                </div>
-                
-                <!-- Projects Management -->
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-                  <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-2xl font-gt-walsheim-bold text-gray-900">Your Projects</h3>
-                    <button class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-gt-walsheim-bold px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300">
-                      Add New Project
-                    </button>
-                  </div>
-                  
-                  <div class="space-y-4">
-                    <!-- Existing Project -->
-                    <div class="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-300">
-                      <div class="flex items-start justify-between mb-4">
-                        <div>
-                          <h4 class="text-lg font-gt-walsheim-bold text-gray-900 mb-2">AI-Powered Analytics Platform</h4>
-                          <p class="text-gray-600 text-sm mb-3">Machine learning platform for real-time data analytics</p>
-                          <div class="flex items-center space-x-4 text-sm text-gray-500">
-                            <span>Technology: AI/ML</span>
-                            <span>•</span>
-                            <span>Maturity: Stage 5</span>
-                            <span>•</span>
-                            <span>Updated: 2 days ago</span>
-                          </div>
-                        </div>
-                        <div class="flex space-x-2">
-                          <button class="bg-primary-blue text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-blue/90 transition-colors duration-200">
-                            Run New Match
-                          </button>
-                          <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors duration-200">
-                            Edit
-                          </button>
-                        </div>
-                      </div>
-                      
-                      <div class="bg-gray-50 rounded-lg p-4">
-                        <h5 class="font-medium text-gray-900 mb-2">Last Match Results</h5>
-                        <div class="grid grid-cols-3 gap-4 text-sm">
-                          <div class="text-center">
-                            <div class="text-lg font-gt-walsheim-bold text-emerald-600">12</div>
-                            <div class="text-gray-600">Grants Found</div>
-                          </div>
-                          <div class="text-center">
-                            <div class="text-lg font-gt-walsheim-bold text-primary-blue">3</div>
-                            <div class="text-gray-600">High Matches</div>
-                          </div>
-                          <div class="text-center">
-                            <div class="text-lg font-gt-walsheim-bold text-cta-pink">£2.8M</div>
-                            <div class="text-gray-600">Total Value</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <!-- Add Project Placeholder -->
-                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-gray-400 transition-colors duration-300">
-                      <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                        </svg>
-                      </div>
-                      <h4 class="text-lg font-gt-walsheim-bold text-gray-900 mb-2">Add New Project</h4>
-                      <p class="text-gray-600 mb-4">Create a new project to get personalized grant recommendations</p>
-                      <button class="bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-gt-walsheim-bold px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300">
-                        Get Started
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Matching Preferences -->
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-                  <h3 class="text-2xl font-gt-walsheim-bold text-gray-900 mb-6">Matching Preferences</h3>
-                  
-                  <div class="space-y-6">
-                    <div>
-                      <label for="grantSize" class="block text-sm font-medium text-gray-700 mb-2">Preferred Grant Size</label>
-                      <select id="grantSize" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200">
-                        <option>Any size</option>
-                        <option>£10k - £100k</option>
-                        <option>£100k - £500k</option>
-                        <option>£500k - £2M</option>
-                        <option>£2M+</option>
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <label for="notificationFreq" class="block text-sm font-medium text-gray-700 mb-2">Notification Frequency</label>
-                      <select id="notificationFreq" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200">
-                        <option>Daily</option>
-                        <option>Weekly</option>
-                        <option>Monthly</option>
-                        <option>On demand only</option>
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <label class="flex items-center space-x-3">
-                        <input type="checkbox" checked class="w-5 h-5 text-primary-blue border-gray-300 rounded focus:ring-primary-blue" />
-                        <span class="text-sm text-gray-700">Email me about new grant opportunities</span>
-                      </label>
-                    </div>
-                    
-                    <div>
-                      <label class="flex items-center space-x-3">
-                        <input type="checkbox" class="w-5 h-5 text-primary-blue border-gray-300 rounded focus:ring-primary-blue" />
-                        <span class="text-sm text-gray-700">Include EU and international grants</span>
-                      </label>
-                    </div>
-                  </div>
-                  
-                  <div class="mt-6">
-                    <button class="bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-gt-walsheim-bold px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300">
-                      Save Preferences
-                    </button>
-                  </div>
-                </div>
-                
-                <!-- Account Actions -->
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-                  <h3 class="text-2xl font-gt-walsheim-bold text-gray-900 mb-6">Account Actions</h3>
-                  
-                  <div class="space-y-4">
-                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                      <div>
-                        <h4 class="font-medium text-gray-900">Sign Out</h4>
-                        <p class="text-sm text-gray-600">Sign out of your Trellis account</p>
-                      </div>
-                      <button 
-                        on:click={() => goto('/')}
-                        class="bg-gradient-to-r from-red-500 to-red-600 text-white font-gt-walsheim-bold px-6 py-3 rounded-xl hover:shadow-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center space-x-2"
-                      >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                        </svg>
-                        <span>Log Out</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             {/if}
           </div>
         </div>

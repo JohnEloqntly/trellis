@@ -4,6 +4,7 @@
   import { fade, slide, fly, scale } from 'svelte/transition';
   import { goto } from '$app/navigation';
   import Sidebar from '$lib/components/Sidebar.svelte';
+  import TopAppBar from '$lib/components/TopAppBar.svelte';
   
   let searchParams: {
     sector: string;
@@ -147,12 +148,16 @@
 </svelte:head>
 
 <!-- Portal-Style Layout -->
-<div class="flex h-screen bg-gray-50">
-  <!-- Sidebar -->
-  <Sidebar expanded={false} {activeSection} onSectionChange={handleSectionChange} />
+<div class="bg-gray-50">
+  <!-- Top App Bar (behind sidebar) -->
+  <TopAppBar />
   
-  <!-- Main Content -->
-  <div class="flex-1 overflow-auto">
+  <div class="flex h-screen pt-16 bg-gray-50">
+    <!-- Sidebar -->
+    <Sidebar expanded={false} {activeSection} onSectionChange={handleSectionChange} />
+    
+    <!-- Main Content -->
+    <div class="flex-1 overflow-auto">
     <div class="p-6 lg:p-8">
       
       {#if mounted}

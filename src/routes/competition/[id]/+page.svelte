@@ -4,6 +4,7 @@
   import { fade, slide, fly } from 'svelte/transition';
   import { goto } from '$app/navigation';
   import Sidebar from '$lib/components/Sidebar.svelte';
+  import TopAppBar from '$lib/components/TopAppBar.svelte';
   import GrantWriterCard from '$lib/components/GrantWriterCard.svelte';
   import { grantWriters } from '$lib/data/grant-writers.js';
   
@@ -311,7 +312,10 @@
 
 <div class="min-h-screen bg-gray-50">
   {#if mounted && competition}
-    <div class="flex h-screen">
+    <!-- Top App Bar (behind sidebar) -->
+    <TopAppBar />
+    
+    <div class="flex h-screen pt-16">
       <!-- Collapsed Sidebar -->
       <Sidebar 
         bind:expanded={sidebarExpanded} 
