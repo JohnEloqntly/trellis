@@ -445,14 +445,15 @@
       });
       
       if (response.ok) {
-        // Clear the stored data
-        onboardingData.reset();
-        
         // Navigate to loading with URL params so both dev and prod work reliably
         const url = `/loading?sector=${encodeURIComponent(data.sector || '')}` +
           `&technology=${encodeURIComponent(data.technologyType || '')}` +
-          `&maturity=${encodeURIComponent(String(data.innovationMaturity ?? '5'))}` +
+          `&maturity=${encodeURIComponent(String(data.innovationMaturity))}` +
           `&company=${encodeURIComponent(data.companyName || '')}`;
+        
+        // Clear the stored data AFTER we've captured the values for URL
+        onboardingData.reset();
+        
         window.location.href = url; // Direct browser navigation to ensure it works in all cases
       } else {
         throw new Error('Failed to submit onboarding data');
