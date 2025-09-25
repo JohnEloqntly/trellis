@@ -372,9 +372,8 @@
                     <div class="bg-white rounded-xl p-4 border border-gray-200">
                       <div class="flex items-center space-x-2 mb-2">
                         <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a2 2 0 014 0m-4 8h2m-2 0h-2m2 0h2m-2 0v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-2a2 2 0 012-2h1m1-4V7a2 2 0 014 0m0 0v4m0 0h1a2 2 0 012 2v2a2 2 0 01-2 2h-1"/>
                         </svg>
-                        <span class="text-sm font-medium text-gray-700">£</span>
                       </div>
                       <p class="text-lg font-gt-walsheim-bold text-emerald-600">{competition.amount}</p>
                     </div>
