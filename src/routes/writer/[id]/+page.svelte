@@ -4,16 +4,28 @@
   import { fade, slide } from 'svelte/transition';
   import { goto } from '$app/navigation';
   import { currentProjectWriters, toggleWriter } from '$lib/stores/projectSaves.js';
+  import Sidebar from '$lib/components/Sidebar.svelte';
+  import TopAppBar from '$lib/components/TopAppBar.svelte';
   
   let writer: any = null;
   let mounted = false;
   let showSaveSuccess = false;
-  
+  let activeSection = 'writer-detail';
+  let sidebarExpanded = true;
+
   // Get project-scoped saved writers
   $: savedWriters = $currentProjectWriters;
   $: isSaved = writer ? savedWriters.includes(writer.id) : false;
   let showContactModal = false;
   let showContactSuccess = false;
+
+  // Handle section change from sidebar
+  function handleSectionChange(section: string) {
+    if (section === 'matches') goto('/portal');
+    else if (section === 'competitions') goto('/portal?section=competitions');
+    else if (section === 'saved-competitions') goto('/portal?section=saved-competitions');
+    else if (section === 'saved-writers') goto('/portal?section=saved-writers');
+  }
   let contactForm = {
     name: '',
     email: '',
@@ -492,7 +504,20 @@ His approach combines technical expertise with commercial understanding, enablin
 
 {#if mounted && writer}
   <div class="min-h-screen bg-gray-50">
-    <div class="max-w-4xl mx-auto p-6 lg:p-8">
+  <!-- Top App Bar (behind sidebar) -->
+  <TopAppBar {sidebarExpanded} />
+  
+  <div class="flex h-screen">
+    <!-- Sidebar Component -->
+    <Sidebar 
+      bind:expanded={sidebarExpanded} 
+      {activeSection} 
+      onSectionChange={handleSectionChange}
+    />
+
+    <!-- Main Content -->
+    <div class="flex-1 overflow-auto">
+      <div class="max-w-4xl mx-auto p-6 lg:p-8 pt-24">
       
       <!-- Navigation -->
       <div class="mb-8" in:fade={{ duration: 300 }}>
@@ -898,6 +923,8 @@ His approach combines technical expertise with commercial understanding, enablin
           </button>
         </div>
       {/if}
+      </div>
     </div>
   </div>
+</div>
 {/if}
