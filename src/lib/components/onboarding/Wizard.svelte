@@ -420,7 +420,13 @@
   
   function handleSliderChange(event: any) {
     const value = parseInt(event.detail.value);
+    
+    // Update both local data and store
+    data.innovationMaturity = value;
     onboardingData.updateField('innovationMaturity', value);
+    
+    // Force reactivity update
+    data = { ...data };
     
     // Show TRL tooltip
     if (value >= 1 && value <= 9) {
