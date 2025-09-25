@@ -773,9 +773,11 @@ His approach combines technical expertise with commercial understanding, enablin
                 </div>
               {/each}
             </div>
+            </div>
           </div>
         </div>
-        
+      </div>
+    </div>
   </div>
 {:else}
   <div class="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -923,8 +925,6 @@ His approach combines technical expertise with commercial understanding, enablin
           </button>
         </div>
       {/if}
-      </div>
     </div>
   </div>
-</div>
 {/if}
