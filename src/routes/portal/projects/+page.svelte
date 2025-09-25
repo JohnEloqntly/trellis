@@ -1,12 +1,21 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { fade } from 'svelte/transition';
+  import { fade, slide } from 'svelte/transition';
   import Sidebar from '$lib/components/Sidebar.svelte';
   import TopAppBar from '$lib/components/TopAppBar.svelte';
+  import { projects, activeProjectId, setActiveProject, updateProject } from '$lib/stores/projects.js';
+  import NewProjectDialog from '$lib/components/NewProjectDialog.svelte';
   
   let mounted = false;
   let activeSection = 'projects';
   let sidebarExpanded = true;
+  let showNewProjectDialog = false;
+  let editingProject = null;
+  let showEditDialog = false;
+
+  // Get all projects from store
+  $: allProjects = $projects;
+  $: currentActiveProjectId = $activeProjectId;
   
   // Handle section change from sidebar
   function handleSectionChange(section: string) {
@@ -16,6 +25,36 @@
     else if (section === 'saved-writers') window.location.href = '/portal#saved-writers';
   }
   
+  function openNewProjectDialog() {
+    showNewProjectDialog = true;
+  }
+
+  function closeNewProjectDialog() {
+    showNewProjectDialog = false;
+  }
+
+  function openEditDialog(project) {
+    editingProject = project;
+    showEditDialog = true;
+  }
+
+  function closeEditDialog() {
+    editingProject = null;
+    showEditDialog = false;
+  }
+
+  function makeProjectActive(projectId) {
+    setActiveProject(projectId);
+  }
+
+  function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+  }
+
   onMount(() => {
     mounted = true;
   });
@@ -53,55 +92,76 @@
             <!-- Projects Management -->
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
               <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-gt-walsheim-bold text-gray-900">Active Projects</h3>
-                <button class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-gt-walsheim-bold px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300">
+                <h3 class="text-2xl font-gt-walsheim-bold text-gray-900">Your Projects</h3>
+                <button 
+                  on:click={openNewProjectDialog}
+                  class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-gt-walsheim-bold px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300"
+                >
                   Add New Project
                 </button>
               </div>
               
               <div class="space-y-4">
-                <!-- Existing Project -->
-                <div class="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-300">
-                  <div class="flex items-start justify-between mb-4">
-                    <div>
-                      <h4 class="text-lg font-gt-walsheim-bold text-gray-900 mb-2">AI-Powered Analytics Platform</h4>
-                      <p class="text-gray-600 text-sm mb-3">Machine learning platform for real-time data analytics</p>
-                      <div class="flex items-center space-x-4 text-sm text-gray-500">
-                        <span>Technology: AI/ML</span>
-                        <span>•</span>
-                        <span>Maturity: Stage 5</span>
-                        <span>•</span>
-                        <span>Updated: 2 days ago</span>
+                {#each allProjects as project}
+                  <div class="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-300" class:ring-2={project.id === currentActiveProjectId} class:ring-blue-500={project.id === currentActiveProjectId} class:bg-blue-50={project.id === currentActiveProjectId}>
+                    <div class="flex items-start justify-between mb-4">
+                      <div class="flex-1">
+                        <div class="flex items-center space-x-3 mb-2">
+                          <h4 class="text-lg font-gt-walsheim-bold text-gray-900">{project.name}</h4>
+                          {#if project.id === currentActiveProjectId}
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-lg text-xs font-medium">Active</span>
+                          {/if}
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">{project.description}</p>
+                        <div class="flex items-center space-x-4 text-sm text-gray-500 mb-3">
+                          <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-lg">{project.sector}</span>
+                          <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-lg">{project.technology}</span>
+                          <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-lg">TRL {project.trl}</span>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                          Created: {formatDate(project.createdAt)}
+                        </div>
+                      </div>
+                      <div class="flex space-x-2">
+                        {#if project.id !== currentActiveProjectId}
+                          <button 
+                            on:click={() => makeProjectActive(project.id)}
+                            class="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors duration-200"
+                          >
+                            Make Active
+                          </button>
+                        {/if}
+                        <button 
+                          on:click={() => window.location.href = '/portal'}
+                          class="bg-primary-blue text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-blue/90 transition-colors duration-200"
+                        >
+                          View Matches
+                        </button>
+                        <button 
+                          on:click={() => openEditDialog(project)}
+                          class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors duration-200"
+                        >
+                          Edit
+                        </button>
                       </div>
                     </div>
-                    <div class="flex space-x-2">
-                      <button class="bg-primary-blue text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-blue/90 transition-colors duration-200">
-                        Run New Match
-                      </button>
-                      <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors duration-200">
-                        Edit
-                      </button>
+                    
+                    <!-- Project Details -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                      <h5 class="font-medium text-gray-900 mb-3">Project Details</h5>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <span class="text-gray-600">Problem Statement:</span>
+                          <p class="text-gray-900 mt-1">{project.problemStatement || 'Not specified'}</p>
+                        </div>
+                        <div>
+                          <span class="text-gray-600">Solution Approach:</span>
+                          <p class="text-gray-900 mt-1">{project.solutionApproach || 'Not specified'}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  
-                  <div class="bg-gray-50 rounded-lg p-4">
-                    <h5 class="font-medium text-gray-900 mb-2">Last Match Results</h5>
-                    <div class="grid grid-cols-3 gap-4 text-sm">
-                      <div class="text-center">
-                        <div class="text-lg font-gt-walsheim-bold text-emerald-600">12</div>
-                        <div class="text-gray-600">Grants Found</div>
-                      </div>
-                      <div class="text-center">
-                        <div class="text-lg font-gt-walsheim-bold text-primary-blue">3</div>
-                        <div class="text-gray-600">High Matches</div>
-                      </div>
-                      <div class="text-center">
-                        <div class="text-lg font-gt-walsheim-bold text-cta-pink">£2.8M</div>
-                        <div class="text-gray-600">Total Value</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {/each}
                 
                 <!-- Add Project Placeholder -->
                 <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-gray-400 transition-colors duration-300">
@@ -112,7 +172,10 @@
                   </div>
                   <h4 class="text-lg font-gt-walsheim-bold text-gray-900 mb-2">Add New Project</h4>
                   <p class="text-gray-600 mb-4">Create a new project to get personalized grant recommendations</p>
-                  <button class="bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-gt-walsheim-bold px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300">
+                  <button 
+                    on:click={openNewProjectDialog}
+                    class="bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-gt-walsheim-bold px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300"
+                  >
                     Get Started
                   </button>
                 </div>
@@ -124,3 +187,20 @@
     </div>
   {/if}
 </div>
+
+<!-- New Project Dialog -->
+<NewProjectDialog 
+  bind:isOpen={showNewProjectDialog}
+  on:close={closeNewProjectDialog}
+  on:project-created={closeNewProjectDialog}
+/>
+
+<!-- Edit Project Dialog (reuse NewProjectDialog with pre-filled data) -->
+{#if showEditDialog && editingProject}
+  <NewProjectDialog 
+    bind:isOpen={showEditDialog}
+    {editingProject}
+    on:close={closeEditDialog}
+    on:project-updated={closeEditDialog}
+  />
+{/if}

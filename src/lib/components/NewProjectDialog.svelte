@@ -1,11 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { createProject } from '$lib/stores/projects.js';
+  import { createProject, updateProject } from '$lib/stores/projects.js';
   import { fade, scale } from 'svelte/transition';
 
   const dispatch = createEventDispatcher();
 
   export let isOpen = false;
+  export let editingProject = null; // Pass existing project data for editing
 
   let formData = {
     name: '',
@@ -18,6 +19,19 @@
   };
 
   let isSubmitting = false;
+
+  // Pre-fill form when editing
+  $: if (editingProject) {
+    formData = {
+      name: editingProject.name || '',
+      description: editingProject.description || '',
+      sector: editingProject.sector || '',
+      technology: editingProject.technology || '',
+      trl: editingProject.trl || 1,
+      problemStatement: editingProject.problemStatement || '',
+      solutionApproach: editingProject.solutionApproach || ''
+    };
+  }
 
   const sectors = [
     'Technology',
@@ -75,14 +89,20 @@
     isSubmitting = true;
 
     try {
-      // Create the project
-      const newProject = createProject(formData);
+      if (editingProject) {
+        // Update existing project
+        updateProject(editingProject.id, formData);
+        dispatch('project-updated', editingProject);
+      } else {
+        // Create new project
+        const newProject = createProject(formData);
+        dispatch('project-created', newProject);
+      }
       
-      // Close dialog and notify parent
+      // Close dialog
       closeDialog();
-      dispatch('project-created', newProject);
     } catch (error) {
-      console.error('Error creating project:', error);
+      console.error('Error saving project:', error);
     } finally {
       isSubmitting = false;
     }
@@ -110,7 +130,9 @@
       <!-- Header -->
       <div class="px-6 py-4 border-b border-gray-200">
         <div class="flex items-center justify-between">
-          <h2 class="text-2xl font-gt-walsheim-bold text-gray-900">Create New Project</h2>
+          <h2 class="text-2xl font-gt-walsheim-bold text-gray-900">
+            {editingProject ? 'Edit Project' : 'Create New Project'}
+          </h2>
           <button 
             on:click={closeDialog}
             class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors duration-200"
@@ -120,7 +142,9 @@
             </svg>
           </button>
         </div>
-        <p class="text-gray-600 mt-1">Add a new project to organize your grant applications</p>
+        <p class="text-gray-600 mt-1">
+          {editingProject ? 'Update your project information' : 'Add a new project to organize your grant applications'}
+        </p>
       </div>
 
       <!-- Form -->
@@ -251,7 +275,11 @@
             disabled={isSubmitting || !formData.name.trim() || !formData.sector || !formData.technology}
             class="px-6 py-3 bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-gt-walsheim-bold rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? 'Creating...' : 'Create Project'}
+            {#if isSubmitting}
+              {editingProject ? 'Updating...' : 'Creating...'}
+            {:else}
+              {editingProject ? 'Update Project' : 'Create Project'}
+            {/if}
           </button>
         </div>
       </form>
