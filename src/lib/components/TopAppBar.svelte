@@ -1,6 +1,8 @@
 <script lang="ts">
   import AccountDropdown from './AccountDropdown.svelte';
   
+  export let sidebarExpanded = true;
+  
   let showAccountDropdown = false;
   
   function toggleAccountDropdown() {
@@ -22,7 +24,11 @@
 
 <svelte:window on:click={handleClickOutside} />
 
-<div class="fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 shadow-sm z-10">
+<div 
+  class="fixed top-0 right-0 h-16 bg-white border-b border-gray-200 shadow-sm z-10 transition-all duration-300"
+  class:left-80={sidebarExpanded}
+  class:left-20={!sidebarExpanded}
+>
   <div class="h-full flex items-center justify-end px-6">
     <!-- Company Logo / Account Trigger -->
     <div class="account-dropdown-container relative">

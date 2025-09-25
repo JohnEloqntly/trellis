@@ -12,6 +12,21 @@
     goto('/');
     closeDropdown();
   }
+  
+  function navigateToProfile() {
+    goto('/portal/profile');
+    closeDropdown();
+  }
+  
+  function navigateToProjects() {
+    goto('/portal/projects');
+    closeDropdown();
+  }
+  
+  function navigateToPreferences() {
+    goto('/portal/preferences');
+    closeDropdown();
+  }
 </script>
 
 <div class="bg-white rounded-xl shadow-lg border border-gray-200 min-w-80 overflow-hidden">
@@ -30,7 +45,10 @@
   
   <!-- Menu Items -->
   <div class="py-2">
-    <button class="w-full px-6 py-3 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3">
+    <button 
+      on:click={navigateToProfile}
+      class="w-full px-6 py-3 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3"
+    >
       <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
       </svg>
@@ -40,7 +58,10 @@
       </div>
     </button>
     
-    <button class="w-full px-6 py-3 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3">
+    <button 
+      on:click={navigateToProjects}
+      class="w-full px-6 py-3 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3"
+    >
       <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
       </svg>
@@ -50,7 +71,10 @@
       </div>
     </button>
     
-    <button class="w-full px-6 py-3 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3">
+    <button 
+      on:click={navigateToPreferences}
+      class="w-full px-6 py-3 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3"
+    >
       <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
       </svg>

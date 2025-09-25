@@ -41,23 +41,23 @@
   }
 </script>
 
-<div class="bg-white h-full border-r border-gray-200 shadow-sm transition-all duration-300 relative z-20" class:w-20={!expanded} class:w-80={expanded}>
+<div class="bg-white h-full border-r border-gray-200 shadow-sm transition-all duration-300 relative z-30" class:w-20={!expanded} class:w-80={expanded}>
   <div class="p-4">
     <!-- Logo and Toggle -->
     <div class="flex items-center justify-between mb-8 relative">
       <!-- Trellis Logo -->
       <div class="flex items-center">
         {#if expanded}
-          <img src="/trellis_logo_correct.png" alt="Trellis" class="h-8 w-auto" />
+          <img src="/favicon.png" alt="Trellis" class="h-8 w-auto" />
         {:else}
-          <img src="/favicon.png" alt="Trellis" class="h-8 w-8" />
+          <img src="/favicon.png" alt="Trellis" class="h-8 w-8 object-contain" />
         {/if}
       </div>
       
       <!-- Toggle Button with higher z-index to sit on top of app bar -->
       <button 
         on:click={toggleSidebar}
-        class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors duration-200 relative z-30 bg-white border border-gray-200"
+        class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors duration-200 relative z-40 bg-white border border-gray-200"
         title={expanded ? 'Collapse sidebar' : 'Expand sidebar'}
       >
         <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

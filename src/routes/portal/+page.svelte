@@ -484,7 +484,7 @@
 <div class="min-h-screen bg-gray-50">
   {#if mounted}
     <!-- Top App Bar (behind sidebar) -->
-    <TopAppBar />
+    <TopAppBar {sidebarExpanded} />
     
     <div class="flex h-screen pt-16">
       <!-- Sidebar Component -->

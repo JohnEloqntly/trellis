@@ -150,7 +150,7 @@
 <!-- Portal-Style Layout -->
 <div class="bg-gray-50">
   <!-- Top App Bar (behind sidebar) -->
-  <TopAppBar />
+  <TopAppBar sidebarExpanded={false} />
   
   <div class="flex h-screen pt-16 bg-gray-50">
     <!-- Sidebar -->
