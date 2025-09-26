@@ -371,8 +371,8 @@
                   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-white rounded-xl p-4 border border-gray-200">
                       <div class="flex items-center space-x-2 mb-2">
-                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a2 2 0 014 0m-4 8h2m-2 0h-2m2 0h2m-2 0v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-2a2 2 0 012-2h1m1-4V7a2 2 0 014 0m0 0v4m0 0h1a2 2 0 012 2v2a2 2 0 01-2 2h-1"/>
+                        <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M14 21h-4c-.55 0-1-.45-1-1s.45-1 1-1h4c.55 0 1 .45 1 1s-.45 1-1 1zm2-4H8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1zm-2-4h-4c-.55 0-1-.45-1-1s.45-1 1-1h4c.55 0 1 .45 1 1s-.45 1-1 1zm-2-4h-2v-2c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2c-.55 0-1 .45-1 1s.45 1 1 1 2-.9 2-2c0-2.21-1.79-4-4-4s-4 1.79-4 4v2H8c-.55 0-1 .45-1 1s.45 1 1 1h2c.55 0 1 .45 1 1s-.45 1-1 1H8c-.55 0-1 .45-1 1s.45 1 1 1h8c.55 0 1-.45 1-1s-.45-1-1-1z"/>
                         </svg>
                       </div>
                       <p class="text-lg font-gt-walsheim-bold text-emerald-600">{competition.amount}</p>
