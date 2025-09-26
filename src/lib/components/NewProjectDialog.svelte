@@ -15,7 +15,10 @@
     technology: '',
     trl: 1,
     problemStatement: '',
-    solutionApproach: ''
+    solutionApproach: '',
+    crossSectors: [],
+    marketSize: '',
+    commercialValidation: ''
   };
 
   let isSubmitting = false;
@@ -29,35 +32,96 @@
       technology: editingProject.technology || '',
       trl: editingProject.trl || 1,
       problemStatement: editingProject.problemStatement || '',
-      solutionApproach: editingProject.solutionApproach || ''
+      solutionApproach: editingProject.solutionApproach || '',
+      crossSectors: editingProject.crossSectors || [],
+      marketSize: editingProject.marketSize || '',
+      commercialValidation: editingProject.commercialValidation || ''
     };
   }
 
   const sectors = [
-    'Technology',
-    'Healthcare',
-    'Manufacturing',
-    'Financial Services',
-    'Defense & Security',
+    'Healthcare & Life Sciences',
+    'Technology & Software',
     'Energy & Environment',
-    'AgTech',
-    'Education',
-    'Transportation',
-    'Construction'
+    'Manufacturing & Industrial',
+    'Financial Services',
+    'Education & Training',
+    'Agriculture & Food',
+    'Transportation & Logistics',
+    'Creative & Media',
+    'Social Impact & Non-profit',
+    'Defense & Security',
+    'Aerospace',
+    'Other'
   ];
 
   const technologies = [
-    'AI/ML',
+    'Artificial Intelligence & Machine Learning',
     'Biotechnology & Life Sciences',
     'Clean Energy & Sustainability',
+    'Digital Health & MedTech',
+    'Financial Technology (FinTech)',
+    'Advanced Manufacturing',
     'Robotics & Automation',
-    'Advanced Materials',
-    'Quantum Technology',
-    'Blockchain & Distributed Systems',
-    'IoT & Connected Devices',
+    'Quantum Computing',
     'Cybersecurity',
-    'Space Technology'
+    'Space Technology',
+    'Materials Science',
+    'Internet of Things (IoT)',
+    'Blockchain & Distributed Ledger',
+    'Augmented/Virtual Reality',
+    'Other'
   ];
+
+  // Cross-sector options (all sectors except the selected one)
+  $: crossSectorOptions = sectors.filter(s => s !== formData.sector);
+
+  const marketSizeOptions = [
+    'Tens of customers',
+    'Hundreds of customers',
+    'Thousands of customers',
+    'Tens of thousands of customers',
+    'Hundreds of thousands of customers',
+    'Millions of customers',
+    'Not sure yet'
+  ];
+
+  const validationOptions = [
+    'No validation yet - just an idea',
+    'Some initial research/surveys',
+    'Prototype tested with users',
+    'Pilot customers or partners',
+    'Paying customers',
+    'Market traction with revenue',
+    'Proven business model'
+  ];
+
+  // TRL descriptions
+  const trlDescriptions = {
+    1: "Basic principles observed - Scientific research begins",
+    2: "Technology concept formulated - Practical application is identified",
+    3: "Experimental proof of concept - Active R&D is initiated",
+    4: "Technology validated in lab - Basic components are integrated",
+    5: "Technology validated in relevant environment - Large scale components integrated",
+    6: "Technology demonstrated in relevant environment - Representative model tested",
+    7: "System prototype demonstration - Demonstration in operational environment",
+    8: "System complete and qualified - Technology proven to work",
+    9: "Actual system proven in operational environment - Ready for deployment"
+  };
+
+  // Get TRL description safely
+  function getTrlDescription(trl) {
+    return trlDescriptions[trl] || "Unknown TRL level";
+  }
+
+  // Handle cross-sector checkbox changes
+  function handleCrossSectorChange(sector, checked) {
+    if (checked) {
+      formData.crossSectors = [...formData.crossSectors, sector];
+    } else {
+      formData.crossSectors = formData.crossSectors.filter(s => s !== sector);
+    }
+  }
 
   function closeDialog() {
     isOpen = false;
@@ -73,7 +137,10 @@
       technology: '',
       trl: 1,
       problemStatement: '',
-      solutionApproach: ''
+      solutionApproach: '',
+      crossSectors: [],
+      marketSize: '',
+      commercialValidation: ''
     };
     isSubmitting = false;
   }
@@ -82,7 +149,10 @@
     if (isSubmitting) return;
     
     // Basic validation
-    if (!formData.name.trim() || !formData.sector || !formData.technology) {
+    if (!formData.name.trim() || !formData.sector || !formData.technology || 
+        !formData.problemStatement.trim() || !formData.solutionApproach.trim() ||
+        !formData.marketSize || !formData.commercialValidation || 
+        formData.crossSectors.length === 0) {
       return;
     }
 
@@ -114,6 +184,36 @@
     }
   }
 </script>
+
+<style>
+  /* Custom slider styles */
+  .slider::-webkit-slider-thumb {
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #3B82F6;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  }
+
+  .slider::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #3B82F6;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  }
+
+  .slider:focus::-webkit-slider-thumb {
+    ring: 2px;
+    ring-color: #3B82F6;
+    ring-opacity: 0.5;
+  }
+</style>
 
 {#if isOpen}
   <!-- Backdrop -->
@@ -152,7 +252,7 @@
         <!-- Project Name -->
         <div>
           <label for="projectName" class="block text-sm font-medium text-gray-700 mb-2">
-            Project Name *
+            What is the name of your project? *
           </label>
           <input
             id="projectName"
@@ -199,7 +299,7 @@
 
           <div>
             <label for="technology" class="block text-sm font-medium text-gray-700 mb-2">
-              Technology *
+              What technology are you leveraging? *
             </label>
             <select
               id="technology"
@@ -215,49 +315,121 @@
           </div>
         </div>
 
-        <!-- TRL Level -->
+        <!-- Cross-sector Benefits -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-3">
+            What other sectors outside your own benefit? *
+          </label>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {#each crossSectorOptions as sector}
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.crossSectors.includes(sector)}
+                  on:change={(e) => handleCrossSectorChange(sector, e.target.checked)}
+                  class="rounded border-gray-300 text-primary-blue focus:ring-primary-blue focus:ring-2"
+                />
+                <span class="text-sm text-gray-700">{sector}</span>
+              </label>
+            {/each}
+          </div>
+        </div>
+
+        <!-- Market Size -->
+        <div>
+          <label for="marketSize" class="block text-sm font-medium text-gray-700 mb-2">
+            What size is the market you're targeting? *
+          </label>
+          <select
+            id="marketSize"
+            bind:value={formData.marketSize}
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
+            required
+          >
+            <option value="">Select market size</option>
+            {#each marketSizeOptions as option}
+              <option value={option}>{option}</option>
+            {/each}
+          </select>
+        </div>
+
+        <!-- Commercial Validation -->
+        <div>
+          <label for="commercialValidation" class="block text-sm font-medium text-gray-700 mb-2">
+            How much commercial validation do you have? *
+          </label>
+          <select
+            id="commercialValidation"
+            bind:value={formData.commercialValidation}
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
+            required
+          >
+            <option value="">Select validation level</option>
+            {#each validationOptions as option}
+              <option value={option}>{option}</option>
+            {/each}
+          </select>
+        </div>
+
+        <!-- TRL Level with Enhanced UX -->
         <div>
           <label for="trl" class="block text-sm font-medium text-gray-700 mb-2">
-            Technology Readiness Level (TRL)
+            What is your TRL level? *
           </label>
-          <div class="flex items-center space-x-4">
-            <input
-              id="trl"
-              type="range"
-              min="1"
-              max="9"
-              bind:value={formData.trl}
-              class="flex-1"
-            />
-            <span class="font-medium text-primary-blue w-8">TRL {formData.trl}</span>
+          <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+            <!-- TRL Slider -->
+            <div class="mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-gray-600">TRL 1</span>
+                <span class="font-medium text-primary-blue">TRL {formData.trl}</span>
+                <span class="text-sm text-gray-600">TRL 9</span>
+              </div>
+              <input
+                id="trl"
+                type="range"
+                min="1"
+                max="9"
+                bind:value={formData.trl}
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 {((formData.trl - 1) / 8) * 100}%, #E5E7EB {((formData.trl - 1) / 8) * 100}%, #E5E7EB 100%)"
+              />
+            </div>
+            
+            <!-- TRL Description -->
+            <div class="bg-white rounded-lg p-3 border border-gray-200">
+              <p class="text-sm text-gray-700 font-medium mb-1">TRL {formData.trl}: Current Stage</p>
+              <p class="text-sm text-gray-600">{getTrlDescription(formData.trl)}</p>
+            </div>
           </div>
         </div>
 
         <!-- Problem Statement -->
         <div>
           <label for="problemStatement" class="block text-sm font-medium text-gray-700 mb-2">
-            Problem Statement
+            What problem are you solving? *
           </label>
           <textarea
             id="problemStatement"
             bind:value={formData.problemStatement}
             rows="3"
             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
-            placeholder="What problem does this project solve?"
+            placeholder="Describe the problem your project addresses..."
+            required
           ></textarea>
         </div>
 
         <!-- Solution Approach -->
         <div>
           <label for="solutionApproach" class="block text-sm font-medium text-gray-700 mb-2">
-            Solution Approach
+            What's the solution? *
           </label>
           <textarea
             id="solutionApproach"
             bind:value={formData.solutionApproach}
             rows="3"
             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
-            placeholder="How will you solve this problem?"
+            placeholder="Describe your solution approach..."
+            required
           ></textarea>
         </div>
 
@@ -272,7 +444,10 @@
           </button>
           <button
             type="submit"
-            disabled={isSubmitting || !formData.name.trim() || !formData.sector || !formData.technology}
+            disabled={isSubmitting || !formData.name.trim() || !formData.sector || !formData.technology || 
+                     !formData.problemStatement.trim() || !formData.solutionApproach.trim() ||
+                     !formData.marketSize || !formData.commercialValidation || 
+                     formData.crossSectors.length === 0}
             class="px-6 py-3 bg-gradient-to-r from-primary-blue to-secondary-blue text-white font-gt-walsheim-bold rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {#if isSubmitting}
