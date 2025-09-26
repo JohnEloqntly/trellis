@@ -879,4 +879,5 @@
       </div>
     </div>
   {/if}
-</div> 
+</div>
+<!-- Updated: Competition page enhanced --> 
