@@ -556,10 +556,10 @@
                         {#each spiderData.labelPoints as label}
                           <!-- Background box for label -->
                           <rect
-                            x={label.x - 50}
-                            y={label.y - 15}
-                            width="100"
-                            height="30"
+                            x={label.x - 55}
+                            y={label.y - 18}
+                            width="110"
+                            height="36"
                             fill="white"
                             stroke="#E5E7EB"
                             stroke-width="1.5"
@@ -567,23 +567,24 @@
                             opacity="0.95"
                             filter="drop-shadow(0 2px 4px rgba(0,0,0,0.1))"
                           />
-                          <!-- Label text with proper wrapping -->
+                          <!-- Label text with proper wrapping and uniform padding -->
                           <text 
                             x={label.x} 
                             y={label.y} 
                             text-anchor="middle" 
-                            dy="0.35em" 
+                            dominant-baseline="central"
                             fill="#374151" 
                             font-size="12" 
                             font-weight="600"
                             class="font-gt-walsheim-bold"
                           >
                             {#if label.name.length > 12}
-                              <!-- Split long text into two lines -->
-                              <tspan x={label.x} dy="-0.4em">{label.name.split(' ').slice(0, -1).join(' ')}</tspan>
-                              <tspan x={label.x} dy="1.2em">{label.name.split(' ').slice(-1)[0]}</tspan>
+                              <!-- Split long text into two lines with equal spacing -->
+                              <tspan x={label.x} dy="-0.5em">{label.name.split(' ').slice(0, -1).join(' ')}</tspan>
+                              <tspan x={label.x} dy="1.0em">{label.name.split(' ').slice(-1)[0]}</tspan>
                             {:else}
-                              {label.name}
+                              <!-- Single line text, perfectly centered -->
+                              <tspan x={label.x} dy="0">{label.name}</tspan>
                             {/if}
                           </text>
                         {/each}
