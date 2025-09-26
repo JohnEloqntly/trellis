@@ -201,103 +201,111 @@
 </script>
 
 <style>
-  /* Enhanced TRL slider styles for ultra-smooth interaction */
+  /* Fixed TRL slider styles for working drag interaction */
   .trl-slider {
     -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
-    height: 12px;
-    border-radius: 6px;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: transparent;
     outline: none;
-    background: #E5E7EB;
-    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
-  }
-
-  .trl-slider:hover {
-    background: #D1D5DB;
+    z-index: 10;
   }
 
   .trl-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    height: 28px;
-    width: 28px;
+    height: 24px;
+    width: 24px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+    background: #3B82F6;
     cursor: grab;
-    border: 4px solid #ffffff;
-    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    transition: all 0.2s ease;
     position: relative;
-    z-index: 2;
   }
 
   .trl-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
-    cursor: grab;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
   }
 
   .trl-slider::-webkit-slider-thumb:active {
     cursor: grabbing;
-    transform: scale(1.12);
-    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5), 0 4px 16px rgba(0, 0, 0, 0.2);
-    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.8);
   }
 
   .trl-slider::-moz-range-thumb {
-    height: 28px;
-    width: 28px;
+    height: 24px;
+    width: 24px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+    background: #3B82F6;
     cursor: grab;
-    border: 4px solid #ffffff;
-    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    transition: all 0.2s ease;
     -moz-appearance: none;
+    border: none;
   }
 
   .trl-slider::-moz-range-thumb:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
   }
 
   .trl-slider::-moz-range-thumb:active {
     cursor: grabbing;
-    transform: scale(1.12);
-    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5), 0 4px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.8);
   }
 
-  .trl-slider:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  }
-
-  .trl-slider:focus::-webkit-slider-thumb {
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(59, 130, 246, 0.2);
-  }
-
-  /* Enhanced track styling */
   .trl-slider::-webkit-slider-track {
     -webkit-appearance: none;
-    appearance: none;
-    height: 12px;
-    border-radius: 6px;
+    height: 8px;
+    border-radius: 4px;
     background: transparent;
   }
 
   .trl-slider::-moz-range-track {
-    height: 12px;
-    border-radius: 6px;
+    height: 8px;
+    border-radius: 4px;
     background: transparent;
     border: none;
   }
 
-  /* Add discrete step indicators */
+  .trl-slider:focus {
+    outline: none;
+  }
+
+  .trl-slider:focus::-webkit-slider-thumb {
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6), 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  /* Track container for visual elements */
   .trl-track-container {
     position: relative;
     width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .trl-track-background {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: #E5E7EB;
+    border-radius: 4px;
+    transform: translateY(-50%);
+    pointer-events: none;
   }
 
   .trl-step-indicators {
@@ -312,11 +320,11 @@
 
   .trl-step {
     position: absolute;
-    width: 2px;
-    height: 8px;
+    width: 3px;
+    height: 12px;
     background: #9CA3AF;
-    border-radius: 1px;
-    top: -3px;
+    border-radius: 1.5px;
+    top: -5px;
     transition: all 0.2s ease;
   }
 </style>
@@ -492,6 +500,12 @@
               </div>
               <div class="relative py-3">
                 <div class="trl-track-container">
+                  <!-- Visual track background -->
+                  <div 
+                    class="trl-track-background"
+                    style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 {((formData.trl - 1) / 8) * 100}%, #E5E7EB {((formData.trl - 1) / 8) * 100}%, #E5E7EB 100%)"
+                  ></div>
+                  
                   <!-- Step indicators -->
                   <div class="trl-step-indicators">
                     {#each Array(9) as _, i}
@@ -502,7 +516,7 @@
                     {/each}
                   </div>
                   
-                  <!-- Enhanced TRL Slider -->
+                  <!-- Working TRL Slider -->
                   <input
                     id="trl"
                     type="range"
@@ -511,10 +525,8 @@
                     step="1"
                     bind:value={formData.trl}
                     on:input={handleTrlChange}
-                    on:mousedown={() => formData = {...formData}}
-                    on:touchstart={() => formData = {...formData}}
-                    class="w-full trl-slider"
-                    style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 {((formData.trl - 1) / 8) * 100}%, #E5E7EB {((formData.trl - 1) / 8) * 100}%, #E5E7EB 100%)"
+                    on:change={handleTrlChange}
+                    class="trl-slider"
                     aria-label="Technology Readiness Level from 1 to 9"
                     aria-valuemin="1"
                     aria-valuemax="9"
