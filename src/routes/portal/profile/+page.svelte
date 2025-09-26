@@ -133,7 +133,7 @@
                 </div>
                 
                 <div>
-                  <label for="companyAge" class="block text-sm font-medium text-gray-700 mb-2">How long has your company been around?</label>
+                  <label for="companyAge" class="block text-sm font-medium text-gray-700 mb-2">How long has your company been operating?</label>
                   <select id="companyAge" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white">
                     <option value="0-1">0-1 years</option>
                     <option value="2-5" selected>2-5 years</option>
@@ -144,12 +144,49 @@
                 </div>
                 
                 <div>
-                  <label for="previousGrantFunding" class="block text-sm font-medium text-gray-700 mb-2">Previous Grant Funding</label>
+                  <label for="previousGrantFunding" class="block text-sm font-medium text-gray-700 mb-2">Has your company applied for grant funding before?</label>
                   <select id="previousGrantFunding" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white">
                     <option value="never">Never received grant funding</option>
                     <option value="applied">Applied but not successful</option>
                     <option value="received" selected>Previously received grants</option>
                     <option value="regular">Regular grant recipient</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label for="companySector" class="block text-sm font-medium text-gray-700 mb-2">Which sector do you operate in?</label>
+                  <select id="companySector" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white">
+                    <option value="Advanced Manufacturing">Advanced Manufacturing</option>
+                    <option value="Agriculture & Food Technology" selected>Agriculture & Food Technology</option>
+                    <option value="Automotive">Automotive</option>
+                    <option value="Biotechnology & Life Sciences">Biotechnology & Life Sciences</option>
+                    <option value="Clean Energy & Sustainability">Clean Energy & Sustainability</option>
+                    <option value="Creative Industries">Creative Industries</option>
+                    <option value="Defense & Security">Defense & Security</option>
+                    <option value="Digital Health & MedTech">Digital Health & MedTech</option>
+                    <option value="Education Technology">Education Technology</option>
+                    <option value="Financial Services">Financial Services</option>
+                    <option value="Gaming & Entertainment">Gaming & Entertainment</option>
+                    <option value="Retail & E-commerce">Retail & E-commerce</option>
+                    <option value="Social Impact & Non-profit">Social Impact & Non-profit</option>
+                    <option value="Space Technology">Space Technology</option>
+                    <option value="Transportation & Logistics">Transportation & Logistics</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label for="registeredCountry" class="block text-sm font-medium text-gray-700 mb-2">Where is your company registered?</label>
+                  <select id="registeredCountry" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white">
+                    <option value="United Kingdom" selected>United Kingdom</option>
+                    <option value="Republic of Ireland">Republic of Ireland</option>
+                    <option value="United States">United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Germany">Germany</option>
+                    <option value="France">France</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="Switzerland">Switzerland</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
               </div>
