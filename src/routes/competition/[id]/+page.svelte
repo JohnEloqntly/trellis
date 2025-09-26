@@ -372,7 +372,7 @@
                     <div class="bg-white rounded-xl p-4 border border-gray-200">
                       <div class="flex items-center space-x-2 mb-2">
                         <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M14 21h-4c-.55 0-1-.45-1-1s.45-1 1-1h4c.55 0 1 .45 1 1s-.45 1-1 1zm2-4H8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1zm-2-4h-4c-.55 0-1-.45-1-1s.45-1 1-1h4c.55 0 1 .45 1 1s-.45 1-1 1zm-2-4h-2v-2c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2c-.55 0-1 .45-1 1s.45 1 1 1 2-.9 2-2c0-2.21-1.79-4-4-4s-4 1.79-4 4v2H8c-.55 0-1 .45-1 1s.45 1 1 1h2c.55 0 1 .45 1 1s-.45 1-1 1H8c-.55 0-1 .45-1 1s.45 1 1 1h8c.55 0 1-.45 1-1s-.45-1-1-1z"/>
+                          <path d="M14.5 7.5c0-1.5-1.2-2.7-2.7-2.7S9.1 6 9.1 7.5v1.8H7.5c-.4 0-.8.3-.8.8s.3.8.8.8h1.6v1.8H7.5c-.4 0-.8.3-.8.8s.3.8.8.8h1.6v2.4c0 .4.3.8.8.8h5.6c.4 0 .8-.3.8-.8s-.3-.8-.8-.8h-4.8v-2.4h3.2c.4 0 .8-.3.8-.8s-.3-.8-.8-.8h-3.2V10h3.2c.4 0 .8-.3.8-.8s-.3-.8-.8-.8h-3.2V7.5c0-.7.6-1.2 1.2-1.2s1.2.6 1.2 1.2c0 .4.3.8.8.8s.8-.4.8-.8z"/>
                         </svg>
                       </div>
                       <p class="text-lg font-gt-walsheim-bold text-emerald-600">{competition.amount}</p>
@@ -552,19 +552,39 @@
                           </circle>
                         {/each}
                         
-                        <!-- Labels -->
+                        <!-- Enhanced Labels with Background Boxes -->
                         {#each spiderData.labelPoints as label}
+                          <!-- Background box for label -->
+                          <rect
+                            x={label.x - 50}
+                            y={label.y - 15}
+                            width="100"
+                            height="30"
+                            fill="white"
+                            stroke="#E5E7EB"
+                            stroke-width="1.5"
+                            rx="12"
+                            opacity="0.95"
+                            filter="drop-shadow(0 2px 4px rgba(0,0,0,0.1))"
+                          />
+                          <!-- Label text with proper wrapping -->
                           <text 
                             x={label.x} 
                             y={label.y} 
                             text-anchor="middle" 
                             dy="0.35em" 
                             fill="#374151" 
-                            font-size="14" 
+                            font-size="12" 
                             font-weight="600"
                             class="font-gt-walsheim-bold"
                           >
-                            {label.name}
+                            {#if label.name.length > 12}
+                              <!-- Split long text into two lines -->
+                              <tspan x={label.x} dy="-0.4em">{label.name.split(' ').slice(0, -1).join(' ')}</tspan>
+                              <tspan x={label.x} dy="1.2em">{label.name.split(' ').slice(-1)[0]}</tspan>
+                            {:else}
+                              {label.name}
+                            {/if}
                           </text>
                         {/each}
                         
