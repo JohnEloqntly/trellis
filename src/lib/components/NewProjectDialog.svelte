@@ -123,20 +123,19 @@
     }
   }
 
-  // Handle TRL slider changes with smooth updates
+  // Enhanced TRL slider changes with ultra-smooth updates
   function handleTrlChange(event) {
-    formData.trl = parseInt(event.target.value);
-    // Force reactivity
-    formData = { ...formData };
-  }
-
-  // Handle slider click - allow clicking anywhere on track
-  function handleSliderClick(event) {
-    const rect = event.target.getBoundingClientRect();
-    const percent = (event.clientX - rect.left) / rect.width;
-    const value = Math.round(1 + percent * 8); // TRL 1-9
-    formData.trl = Math.max(1, Math.min(9, value));
-    formData = { ...formData };
+    const newValue = parseInt(event.target.value);
+    if (newValue !== formData.trl) {
+      formData.trl = newValue;
+      // Force immediate reactivity for smooth UI updates
+      formData = { ...formData };
+      
+      // Add haptic feedback on supported devices
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    }
   }
 
   function closeDialog() {
@@ -202,85 +201,123 @@
 </script>
 
 <style>
-  /* Custom slider styles for enhanced interactivity */
-  .slider {
+  /* Enhanced TRL slider styles for ultra-smooth interaction */
+  .trl-slider {
     -webkit-appearance: none;
     appearance: none;
-    height: 8px;
-    border-radius: 4px;
+    height: 12px;
+    border-radius: 6px;
     outline: none;
-    transition: all 0.2s ease;
+    background: #E5E7EB;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
   }
 
-  .slider::-webkit-slider-thumb {
+  .trl-slider:hover {
+    background: #D1D5DB;
+  }
+
+  .trl-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    height: 24px;
-    width: 24px;
+    height: 28px;
+    width: 28px;
     border-radius: 50%;
-    background: #3B82F6;
+    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
     cursor: grab;
-    border: 3px solid #ffffff;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-    transition: all 0.2s ease;
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 2;
   }
 
-  .slider::-webkit-slider-thumb:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+  .trl-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: grab;
   }
 
-  .slider::-webkit-slider-thumb:active {
+  .trl-slider::-webkit-slider-thumb:active {
     cursor: grabbing;
-    transform: scale(1.15);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.8);
+    transform: scale(1.12);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5), 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .slider::-moz-range-thumb {
-    height: 24px;
-    width: 24px;
+  .trl-slider::-moz-range-thumb {
+    height: 28px;
+    width: 28px;
     border-radius: 50%;
-    background: #3B82F6;
+    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
     cursor: grab;
-    border: 3px solid #ffffff;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-    transition: all 0.2s ease;
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    -moz-appearance: none;
   }
 
-  .slider::-moz-range-thumb:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+  .trl-slider::-moz-range-thumb:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
-  .slider::-moz-range-thumb:active {
+  .trl-slider::-moz-range-thumb:active {
     cursor: grabbing;
-    transform: scale(1.15);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.8);
+    transform: scale(1.12);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5), 0 4px 16px rgba(0, 0, 0, 0.2);
   }
 
-  .slider:focus {
+  .trl-slider:focus {
     outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }
 
-  .slider:focus::-webkit-slider-thumb {
-    ring: 2px solid #3B82F6;
-    ring-opacity: 0.5;
+  .trl-slider:focus::-webkit-slider-thumb {
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(59, 130, 246, 0.2);
   }
 
-  /* Track styling */
-  .slider::-webkit-slider-track {
+  /* Enhanced track styling */
+  .trl-slider::-webkit-slider-track {
     -webkit-appearance: none;
     appearance: none;
-    height: 8px;
-    border-radius: 4px;
+    height: 12px;
+    border-radius: 6px;
     background: transparent;
   }
 
-  .slider::-moz-range-track {
-    height: 8px;
-    border-radius: 4px;
+  .trl-slider::-moz-range-track {
+    height: 12px;
+    border-radius: 6px;
     background: transparent;
     border: none;
+  }
+
+  /* Add discrete step indicators */
+  .trl-track-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .trl-step-indicators {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+
+  .trl-step {
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background: #9CA3AF;
+    border-radius: 1px;
+    top: -3px;
+    transition: all 0.2s ease;
   }
 </style>
 
@@ -453,22 +490,46 @@
                 <span class="font-medium text-primary-blue bg-blue-50 px-2 py-1 rounded-lg">TRL {formData.trl}</span>
                 <span class="text-sm text-gray-600">TRL 9</span>
               </div>
-              <div class="relative py-2">
-                <input
-                  id="trl"
-                  type="range"
-                  min="1"
-                  max="9"
-                  bind:value={formData.trl}
-                  on:input={handleTrlChange}
-                  on:click={handleSliderClick}
-                  class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                  style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 {((formData.trl - 1) / 8) * 100}%, #E5E7EB {((formData.trl - 1) / 8) * 100}%, #E5E7EB 100%)"
-                  aria-label="Technology Readiness Level from 1 to 9"
-                  tabindex="0"
-                />
-                <!-- Click instruction -->
-                <p class="text-xs text-gray-500 mt-2 text-center">Click anywhere on the track or drag the slider to adjust TRL level</p>
+              <div class="relative py-3">
+                <div class="trl-track-container">
+                  <!-- Step indicators -->
+                  <div class="trl-step-indicators">
+                    {#each Array(9) as _, i}
+                      <div 
+                        class="trl-step" 
+                        style="left: {(i / 8) * 100}%; background: {i + 1 <= formData.trl ? '#3B82F6' : '#9CA3AF'}"
+                      ></div>
+                    {/each}
+                  </div>
+                  
+                  <!-- Enhanced TRL Slider -->
+                  <input
+                    id="trl"
+                    type="range"
+                    min="1"
+                    max="9"
+                    step="1"
+                    bind:value={formData.trl}
+                    on:input={handleTrlChange}
+                    on:mousedown={() => formData = {...formData}}
+                    on:touchstart={() => formData = {...formData}}
+                    class="w-full trl-slider"
+                    style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 {((formData.trl - 1) / 8) * 100}%, #E5E7EB {((formData.trl - 1) / 8) * 100}%, #E5E7EB 100%)"
+                    aria-label="Technology Readiness Level from 1 to 9"
+                    aria-valuemin="1"
+                    aria-valuemax="9"
+                    aria-valuenow="{formData.trl}"
+                    tabindex="0"
+                  />
+                </div>
+                
+                <!-- Enhanced instruction with visual cues -->
+                <div class="flex items-center justify-center mt-3 space-x-2">
+                  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                  </svg>
+                  <p class="text-xs text-gray-500 text-center">Drag the slider or click any point to adjust TRL level smoothly</p>
+                </div>
               </div>
             </div>
             

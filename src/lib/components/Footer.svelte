@@ -29,9 +29,9 @@
             </a>
           </li>
           <li>
-            <a href="/team" class="text-gray-600 hover:text-gray-900 transition-colors duration-200 focus-ring rounded text-sm">
+            <span class="text-gray-600 text-sm">
               Our Team
-            </a>
+            </span>
           </li>
           <li>
             <a href="/help" class="text-gray-600 hover:text-gray-900 transition-colors duration-200 focus-ring rounded text-sm">
