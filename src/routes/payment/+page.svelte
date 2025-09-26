@@ -11,6 +11,7 @@
   // Form data
   let paymentForm = {
     email: '',
+    phone: '',
     name: '',
     cardNumber: '',
     expiryMonth: '',
@@ -34,6 +35,10 @@
     // Simple validation - just check if fields have content
     if (!paymentForm.email || paymentForm.email.trim().length === 0) {
       errors.email = 'Please enter email address';
+    }
+    
+    if (!paymentForm.phone || paymentForm.phone.trim().length === 0) {
+      errors.phone = 'Please enter phone number';
     }
     
     if (!paymentForm.name || paymentForm.name.trim().length === 0) {
@@ -100,6 +105,20 @@
   // Format postal code
   function formatPostalCode(event: any) {
     paymentForm.postalCode = event.target.value.toUpperCase().substring(0, 8);
+  }
+  
+  // Format phone number
+  function formatPhoneNumber(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+    if (value.length > 0) {
+      if (value.length <= 11) {
+        value = value.replace(/(\d{2})(\d{4})(\d{0,5})/, '$1 $2 $3').trim();
+        if (value.length > 8) {
+          value = value.replace(/(\d{2}) (\d{4}) (\d{1,5})/, '$1 $2 $3');
+        }
+      }
+    }
+    paymentForm.phone = value.substring(0, 14); // Limit to reasonable length
   }
 </script>
 
@@ -264,6 +283,23 @@
                     />
                     {#if errors.email}
                       <p class="text-red-600 text-xs mt-1">{errors.email}</p>
+                    {/if}
+                  </div>
+
+                  <!-- Phone Number -->
+                  <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                    <input
+                      id="phone"
+                      type="tel"
+                      value={paymentForm.phone}
+                      on:input={formatPhoneNumber}
+                      class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all duration-200 text-gray-900 bg-white"
+                      placeholder="07 1234 56789"
+                      class:border-red-300={errors.phone}
+                    />
+                    {#if errors.phone}
+                      <p class="text-red-600 text-xs mt-1">{errors.phone}</p>
                     {/if}
                   </div>
 
