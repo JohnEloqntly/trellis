@@ -123,6 +123,22 @@
     }
   }
 
+  // Handle TRL slider changes with smooth updates
+  function handleTrlChange(event) {
+    formData.trl = parseInt(event.target.value);
+    // Force reactivity
+    formData = { ...formData };
+  }
+
+  // Handle slider click - allow clicking anywhere on track
+  function handleSliderClick(event) {
+    const rect = event.target.getBoundingClientRect();
+    const percent = (event.clientX - rect.left) / rect.width;
+    const value = Math.round(1 + percent * 8); // TRL 1-9
+    formData.trl = Math.max(1, Math.min(9, value));
+    formData = { ...formData };
+  }
+
   function closeDialog() {
     isOpen = false;
     dispatch('close');
@@ -186,32 +202,85 @@
 </script>
 
 <style>
-  /* Custom slider styles */
-  .slider::-webkit-slider-thumb {
+  /* Custom slider styles for enhanced interactivity */
+  .slider {
+    -webkit-appearance: none;
     appearance: none;
-    height: 20px;
-    width: 20px;
+    height: 8px;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 24px;
+    width: 24px;
     border-radius: 50%;
     background: #3B82F6;
-    cursor: pointer;
-    border: 2px solid #ffffff;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    cursor: grab;
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    transition: all 0.2s ease;
+  }
+
+  .slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+  }
+
+  .slider::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.8);
   }
 
   .slider::-moz-range-thumb {
-    height: 20px;
-    width: 20px;
+    height: 24px;
+    width: 24px;
     border-radius: 50%;
     background: #3B82F6;
-    cursor: pointer;
-    border: 2px solid #ffffff;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    cursor: grab;
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    transition: all 0.2s ease;
+  }
+
+  .slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+  }
+
+  .slider::-moz-range-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.8);
+  }
+
+  .slider:focus {
+    outline: none;
   }
 
   .slider:focus::-webkit-slider-thumb {
-    ring: 2px;
-    ring-color: #3B82F6;
+    ring: 2px solid #3B82F6;
     ring-opacity: 0.5;
+  }
+
+  /* Track styling */
+  .slider::-webkit-slider-track {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    background: transparent;
+  }
+
+  .slider::-moz-range-track {
+    height: 8px;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
   }
 </style>
 
@@ -381,18 +450,26 @@
             <div class="mb-4">
               <div class="flex items-center justify-between mb-2">
                 <span class="text-sm text-gray-600">TRL 1</span>
-                <span class="font-medium text-primary-blue">TRL {formData.trl}</span>
+                <span class="font-medium text-primary-blue bg-blue-50 px-2 py-1 rounded-lg">TRL {formData.trl}</span>
                 <span class="text-sm text-gray-600">TRL 9</span>
               </div>
-              <input
-                id="trl"
-                type="range"
-                min="1"
-                max="9"
-                bind:value={formData.trl}
-                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 {((formData.trl - 1) / 8) * 100}%, #E5E7EB {((formData.trl - 1) / 8) * 100}%, #E5E7EB 100%)"
-              />
+              <div class="relative py-2">
+                <input
+                  id="trl"
+                  type="range"
+                  min="1"
+                  max="9"
+                  bind:value={formData.trl}
+                  on:input={handleTrlChange}
+                  on:click={handleSliderClick}
+                  class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                  style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 {((formData.trl - 1) / 8) * 100}%, #E5E7EB {((formData.trl - 1) / 8) * 100}%, #E5E7EB 100%)"
+                  aria-label="Technology Readiness Level from 1 to 9"
+                  tabindex="0"
+                />
+                <!-- Click instruction -->
+                <p class="text-xs text-gray-500 mt-2 text-center">Click anywhere on the track or drag the slider to adjust TRL level</p>
+              </div>
             </div>
             
             <!-- TRL Description -->
